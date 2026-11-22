@@ -44,6 +44,20 @@ test('opens the evidence gallery and adds a photo', async ({ page }) => {
   await expect(page.getByText('E-04')).toBeVisible();
 });
 
+test('adds a photo on the evidence screen and keeps it in the summary', async ({ page }) => {
+  await page.goto('/evidencias');
+
+  await page.locator('input[type="file"]').last().setInputFiles('public/img/inspeccion1.jpg');
+
+  await expect(page.getByText('Foto capturada #4')).toBeVisible();
+
+  await page.getByRole('button', { name: /guardar evidencia/i }).click();
+  await page.locator('ion-button', { hasText: 'Continuar al resumen' }).click();
+
+  await expect(page.getByText('Ver todas (4)')).toBeVisible();
+  await expect(page.getByText('E-04')).toBeVisible();
+});
+
 test('shows the summary indicators and the app shell', async ({ page }) => {
   await page.goto('/resumen');
 

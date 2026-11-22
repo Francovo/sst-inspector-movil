@@ -44,6 +44,7 @@ export type InspectionDraftValue = {
   setCargo: (value: string) => void;
   setSignature: (value: string | null) => void;
   addEvidences: (files: File[]) => void;
+  removeEvidence: (id: string) => void;
 };
 
 export const InspectionDraftContext = createContext<InspectionDraftValue | null>(null);
