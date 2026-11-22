@@ -100,6 +100,40 @@ test('opens the side menu and navigates with it', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Resumen de inspecciones' })).toBeVisible();
 });
 
+test('restores the draft after a reload', async ({ page }) => {
+  await page.goto('/firma');
+  await page.fill('#responsable-nombre', 'Persistencia E2E');
+  await page.fill('#responsable-cargo', 'QA');
+
+  await page.waitForFunction(() =>
+    Object.keys(localStorage).some(
+      (key) => key.includes('sst-inspection-draft') && localStorage.getItem(key)?.includes('Persistencia E2E'),
+    ),
+  );
+
+  await page.reload();
+
+  await expect(page.locator('#responsable-nombre')).toHaveValue('Persistencia E2E');
+  await expect(page.locator('#responsable-cargo')).toHaveValue('QA');
+});
+
+test('restores an uploaded photo after a reload', async ({ page }) => {
+  await page.goto('/evidencias');
+  await page.locator('input[type="file"]').setInputFiles('public/img/inspeccion1.jpg');
+
+  await expect(page.getByText('Foto capturada #4')).toBeVisible();
+  await page.waitForFunction(() =>
+    Object.keys(localStorage).some(
+      (key) => key.includes('sst-inspection-draft') && localStorage.getItem(key)?.includes('evidencias/E-04'),
+    ),
+  );
+
+  await page.reload();
+
+  await expect(page.getByText('Foto capturada #4')).toBeVisible();
+  await expect(page.locator('.evidencias__preview img')).toHaveAttribute('src', /^data:image\/jpeg;base64/);
+});
+
 test('shows the summary indicators and the app shell', async ({ page }) => {
   await page.goto('/resumen');
 
