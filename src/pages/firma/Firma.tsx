@@ -1,25 +1,23 @@
 import { IonButton, IonContent, IonIcon, IonPage } from '@ionic/react';
 import { arrowForwardOutline, briefcaseOutline, checkmarkCircle, createOutline, personOutline } from 'ionicons/icons';
 import type { JSX } from 'react';
-import { useState } from 'react';
 
 import AppHeader from '../../components/AppHeader';
 import AppTabBar from '../../components/AppTabBar';
 import SignaturePad from '../../components/SignaturePad';
 import Stepper from '../../components/Stepper';
+import { useInspectionDraft } from '../../features/inspection/draftContext';
 import './Firma.css';
 
 const INSPECTION_STEPS = ['Inspección', 'Evidencia', 'Revisión', 'Firma', 'Resumen'];
 
 /**
  * Visual mockup of the "Firma Digital" screen.
- * The responsable fields and the canvas are local UI state only: there is no
- * report, storage or signature validation behind them yet.
+ * The responsable fields and the canvas write into the shared inspection draft,
+ * which is what the summary screen reads back.
  */
 const Firma = (): JSX.Element => {
-  const [responsable, setResponsable] = useState('Johan Sebastián Montealegre');
-  const [cargo, setCargo] = useState('Inspector SST Líder');
-  const [signatureCaptured, setSignatureCaptured] = useState(false);
+  const { draft, setResponsable, setCargo, setSignature } = useInspectionDraft();
 
   return (
     <IonPage>
@@ -57,7 +55,7 @@ const Firma = (): JSX.Element => {
                   onChange={(event) => setResponsable(event.target.value)}
                   placeholder="Ingresa tu nombre completo"
                   type="text"
-                  value={responsable}
+                  value={draft.responsable}
                 />
               </div>
             </div>
@@ -76,17 +74,17 @@ const Firma = (): JSX.Element => {
                   onChange={(event) => setCargo(event.target.value)}
                   placeholder="Ingresa tu cargo o rol"
                   type="text"
-                  value={cargo}
+                  value={draft.cargo}
                 />
               </div>
             </div>
 
             <div className="sst-field">
               <span className="sst-field__label">Firma del responsable *</span>
-              <SignaturePad onClear={() => setSignatureCaptured(false)} onSave={() => setSignatureCaptured(true)} />
+              <SignaturePad onClear={() => setSignature(null)} onSave={setSignature} />
             </div>
 
-            {signatureCaptured && (
+            {draft.signature && (
               <p className="firma__feedback" role="status">
                 <IonIcon aria-hidden="true" icon={checkmarkCircle} />
                 Firma capturada en este dispositivo (demostración).

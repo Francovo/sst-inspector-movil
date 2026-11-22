@@ -3,6 +3,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import type { JSX } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 
+import { InspectionDraftProvider } from './features/inspection/InspectionDraftProvider';
 import Firma from './pages/firma/Firma';
 import Resumen from './pages/resumen/Resumen';
 
@@ -32,14 +33,16 @@ setupIonicReact();
 // `dark.system.css` palette is intentionally not imported.
 const App = (): JSX.Element => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/firma" element={<Firma />} />
-        <Route path="/resumen" element={<Resumen />} />
-        <Route path="/" element={<Navigate to="/firma" replace />} />
-        <Route path="*" element={<Navigate to="/firma" replace />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
+    <InspectionDraftProvider>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/firma" element={<Firma />} />
+          <Route path="/resumen" element={<Resumen />} />
+          <Route path="/" element={<Navigate to="/firma" replace />} />
+          <Route path="*" element={<Navigate to="/firma" replace />} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </InspectionDraftProvider>
   </IonApp>
 );
 

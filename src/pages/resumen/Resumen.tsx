@@ -1,5 +1,6 @@
 import { IonButton, IonContent, IonIcon, IonPage } from '@ionic/react';
 import {
+  briefcaseOutline,
   businessOutline,
   calendarOutline,
   checkmark,
@@ -10,17 +11,20 @@ import {
   locationOutline,
   personOutline,
   saveOutline,
+  timeOutline,
   warning,
 } from 'ionicons/icons';
 import type { JSX } from 'react';
 
 import AppHeader from '../../components/AppHeader';
 import AppTabBar from '../../components/AppTabBar';
+import { useInspectionDraft } from '../../features/inspection/draftContext';
 import './Resumen.css';
 
 /**
- * Demo content for the visual mockup: the inspection flow does not exist yet,
- * so every value below is hard-coded on purpose.
+ * Demo content for the visual mockup: the inspection itself does not exist yet,
+ * so every value below is hard-coded on purpose. The inspector name, the role
+ * and the signature come from the shared draft filled on the "Firma" screen.
  */
 const INSPECTION = {
   code: 'INS-2026-001',
@@ -28,14 +32,12 @@ const INSPECTION = {
   site: 'Planta de producción – Zona 1',
   checklist: 'Decreto 1072 – Condiciones Locativas',
   date: '10 de noviembre de 2026',
-  inspector: 'Johan Sebastián Montealegre',
   answered: 18,
   total: 20,
   score: 90,
   findings: 3,
   nonConformities: 2,
   observations: 1,
-  signedAt: '10/11/2026 12:05',
   evidences: [
     { id: 'E-01', src: '/img/inspeccion1.jpg', alt: 'Revisión de un vehículo en el patio' },
     { id: 'E-02', src: '/img/inspeccion2.jpg', alt: 'Verificación de una estructura en obra' },
@@ -44,7 +46,9 @@ const INSPECTION = {
 };
 
 const Resumen = (): JSX.Element => {
+  const { draft } = useInspectionDraft();
   const answeredPercent = Math.round((INSPECTION.answered / INSPECTION.total) * 100);
+  const isSigned = Boolean(draft.signature);
 
   return (
     <IonPage>
@@ -93,7 +97,12 @@ const Resumen = (): JSX.Element => {
               <div className="resumen__meta-row">
                 <IonIcon aria-hidden="true" icon={personOutline} />
                 <dt>Inspector</dt>
-                <dd>{INSPECTION.inspector}</dd>
+                <dd>{draft.responsable || '—'}</dd>
+              </div>
+              <div className="resumen__meta-row">
+                <IonIcon aria-hidden="true" icon={briefcaseOutline} />
+                <dt>Cargo</dt>
+                <dd>{draft.cargo || '—'}</dd>
               </div>
             </dl>
           </section>
@@ -170,27 +179,34 @@ const Resumen = (): JSX.Element => {
           </section>
 
           <section aria-label="Firma del inspector" className="sst-card resumen__signature">
-            <div className="resumen__signature-banner">
+            <div className={`resumen__signature-banner${isSigned ? '' : ' resumen__signature-banner--pending'}`}>
               <span aria-hidden="true" className="resumen__signature-icon">
-                <IonIcon icon={checkmark} />
+                <IonIcon icon={isSigned ? checkmark : timeOutline} />
               </span>
               <div>
                 <p>Firma del inspector</p>
-                <small>Firma registrada correctamente</small>
+                <small>{isSigned ? 'Firma registrada correctamente' : 'Firma pendiente de captura'}</small>
               </div>
-              <span className="sst-badge sst-badge--success">Válida</span>
+              <span className={`sst-badge ${isSigned ? 'sst-badge--success' : 'sst-badge--warning'}`}>
+                {isSigned ? 'Válida' : 'Pendiente'}
+              </span>
             </div>
 
-            <div className="resumen__signature-pad">
-              <svg aria-hidden="true" viewBox="0 0 260 70">
-                <path d="M 20 45 C 35 15, 45 10, 55 35 C 65 60, 70 65, 80 40 C 90 20, 110 25, 125 35 C 140 45, 145 60, 170 30 C 185 10, 200 45, 240 38" />
-                <path d="M 60 55 C 80 62, 160 62, 210 52" />
-              </svg>
+            <div className={`resumen__signature-pad${isSigned ? '' : ' resumen__signature-pad--empty'}`}>
+              {draft.signature ? (
+                <img
+                  alt={`Firma de ${draft.responsable || 'el inspector'}`}
+                  className="resumen__signature-image"
+                  src={draft.signature}
+                />
+              ) : (
+                <span className="resumen__signature-empty">Sin firma capturada</span>
+              )}
             </div>
 
             <div className="resumen__signature-foot">
-              <strong>{INSPECTION.inspector}</strong>
-              <span>{INSPECTION.signedAt}</span>
+              <strong>{draft.responsable || '—'}</strong>
+              <span>{draft.signedAt ?? '—'}</span>
             </div>
           </section>
 

@@ -16,6 +16,17 @@ test('continues from the signature to the inspection summary', async ({ page }) 
   await expect(page.getByText('INS-2026-001')).toBeVisible();
 });
 
+test('carries the signature data into the summary', async ({ page }) => {
+  await page.goto('/firma');
+
+  await page.fill('#responsable-nombre', 'Ana María Ríos');
+  await page.fill('#responsable-cargo', 'Coordinadora SST');
+  await page.locator('ion-button', { hasText: 'Continuar al resumen' }).click();
+
+  await expect(page.getByText('Ana María Ríos').first()).toBeVisible();
+  await expect(page.getByText('Coordinadora SST').first()).toBeVisible();
+});
+
 test('shows the summary indicators and the app shell', async ({ page }) => {
   await page.goto('/resumen');
 
