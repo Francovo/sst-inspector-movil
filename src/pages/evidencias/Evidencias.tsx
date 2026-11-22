@@ -1,4 +1,4 @@
-import { IonContent, IonIcon, IonPage } from '@ionic/react';
+import { IonIcon } from '@ionic/react';
 import {
   cameraOutline,
   checkmarkDoneOutline,
@@ -13,13 +13,13 @@ import type { ChangeEvent, JSX } from 'react';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import AppHeader from '../../components/AppHeader';
-import AppTabBar from '../../components/AppTabBar';
+import NoteBanner from '../../components/NoteBanner';
+import PageHeading from '../../components/PageHeading';
+import PageShell from '../../components/PageShell';
 import Stepper from '../../components/Stepper';
+import { INSPECTION_STEPS } from '../../features/inspection/constants';
 import { useInspectionDraft } from '../../features/inspection/draftContext';
 import './Evidencias.css';
-
-const INSPECTION_STEPS = ['Inspección', 'Evidencia', 'Revisión', 'Firma', 'Resumen'];
 
 /**
  * Visual mockup of the "Captura de Evidencias" screen.
@@ -43,115 +43,99 @@ const Evidencias = (): JSX.Element => {
   };
 
   return (
-    <IonPage>
-      <AppHeader online={false} withMenu />
+    <PageShell header={{ online: false, withMenu: true }} tab="evidencias">
+      <div className="evidencias">
+        <Stepper current={2} steps={INSPECTION_STEPS} />
 
-      <IonContent className="sst-screen">
-        <div className="evidencias">
-          <Stepper current={2} steps={INSPECTION_STEPS} />
+        <PageHeading
+          icon={imageOutline}
+          subtitle="Registra evidencia fotográfica del hallazgo"
+          title="Captura de evidencias"
+          variant="badge"
+        />
 
-          <header className="evidencias__heading">
-            <span aria-hidden="true" className="evidencias__heading-icon">
-              <IonIcon icon={imageOutline} />
-            </span>
-            <div>
-              <h2>Captura de evidencias</h2>
-              <p>Registra evidencia fotográfica del hallazgo</p>
-            </div>
-          </header>
+        <NoteBanner icon={informationCircle}>
+          Puedes tomar una foto o elegir una imagen de tu galería. Las evidencias se guardan en el dispositivo y se
+          sincronizarán cuando tengas conexión.
+        </NoteBanner>
 
-          <section className="sst-note sst-note--info">
-            <IonIcon aria-hidden="true" icon={informationCircle} />
-            <p>
-              Puedes tomar una foto o elegir una imagen de tu galería. Las evidencias se guardan en el dispositivo y se
-              sincronizarán cuando tengas conexión.
-            </p>
-          </section>
-
-          <section
-            aria-label="Vista previa de la evidencia"
-            className={`evidencias__preview${preview ? '' : ' evidencias__preview--empty'}`}
-          >
-            {preview ? (
-              <>
-                <img alt={preview.alt} src={preview.src} />
-                <button
-                  aria-label="Eliminar imagen"
-                  className="evidencias__remove"
-                  onClick={() => removeEvidence(preview.id)}
-                  type="button"
-                >
-                  <IonIcon aria-hidden="true" icon={closeOutline} />
-                </button>
-                <span className="evidencias__tag">
-                  <IonIcon aria-hidden="true" icon={imageOutline} />
-                  Foto capturada #{draft.evidences.length}
-                </span>
-              </>
-            ) : (
-              <span className="evidencias__placeholder">
-                <IonIcon aria-hidden="true" icon={cameraOutline} />
-                Aún no hay evidencias
+        <section
+          aria-label="Vista previa de la evidencia"
+          className={`evidencias__preview${preview ? '' : ' evidencias__preview--empty'}`}
+        >
+          {preview ? (
+            <>
+              <img alt={preview.alt} src={preview.src} />
+              <button
+                aria-label="Eliminar imagen"
+                className="evidencias__remove"
+                onClick={() => removeEvidence(preview.id)}
+                type="button"
+              >
+                <IonIcon aria-hidden="true" icon={closeOutline} />
+              </button>
+              <span className="evidencias__tag">
+                <IonIcon aria-hidden="true" icon={imageOutline} />
+                Foto capturada #{draft.evidences.length}
               </span>
-            )}
-          </section>
-
-          <div className="evidencias__actions">
-            <button
-              className="sst-button sst-button--primary"
-              onClick={() => cameraInput.current?.click()}
-              type="button"
-            >
+            </>
+          ) : (
+            <span className="evidencias__placeholder">
               <IonIcon aria-hidden="true" icon={cameraOutline} />
-              Tomar foto
-            </button>
-            <button
-              className="sst-button sst-button--outline"
-              onClick={() => galleryInput.current?.click()}
-              type="button"
-            >
-              <IonIcon aria-hidden="true" icon={imagesOutline} />
-              Elegir de galería
-            </button>
-          </div>
+              Aún no hay evidencias
+            </span>
+          )}
+        </section>
 
-          <input accept="image/*" capture="environment" hidden onChange={handleFiles} ref={cameraInput} type="file" />
-          <input accept="image/*" hidden onChange={handleFiles} ref={galleryInput} type="file" />
-
-          <section className="sst-card evidencias__description">
-            <div className="evidencias__description-head">
-              <label htmlFor="evidencias-descripcion">
-                <IonIcon aria-hidden="true" icon={createOutline} />
-                Descripción del hallazgo
-              </label>
-              <span>{description.length}/500</span>
-            </div>
-            <textarea
-              className="sst-textarea"
-              id="evidencias-descripcion"
-              maxLength={500}
-              onChange={(event) => setDescription(event.target.value)}
-              placeholder="Describe aquí el hallazgo, incluye detalles relevantes..."
-              rows={2}
-              value={description}
-            />
-          </section>
-
-          <div className="evidencias__footer">
-            <button className="sst-button sst-button--outline" onClick={() => navigate('/inspeccion')} type="button">
-              <IonIcon aria-hidden="true" icon={chevronBackOutline} />
-              Volver al formulario
-            </button>
-            <button className="sst-button sst-button--primary" onClick={() => navigate('/firma')} type="button">
-              <IonIcon aria-hidden="true" icon={checkmarkDoneOutline} />
-              Guardar evidencia
-            </button>
-          </div>
+        <div className="evidencias__actions">
+          <button className="sst-button sst-button--primary" onClick={() => cameraInput.current?.click()} type="button">
+            <IonIcon aria-hidden="true" icon={cameraOutline} />
+            Tomar foto
+          </button>
+          <button
+            className="sst-button sst-button--outline"
+            onClick={() => galleryInput.current?.click()}
+            type="button"
+          >
+            <IonIcon aria-hidden="true" icon={imagesOutline} />
+            Elegir de galería
+          </button>
         </div>
-      </IonContent>
 
-      <AppTabBar active="evidencias" />
-    </IonPage>
+        <input accept="image/*" capture="environment" hidden onChange={handleFiles} ref={cameraInput} type="file" />
+        <input accept="image/*" hidden onChange={handleFiles} ref={galleryInput} type="file" />
+
+        <section className="sst-card evidencias__description">
+          <div className="evidencias__description-head">
+            <label htmlFor="evidencias-descripcion">
+              <IonIcon aria-hidden="true" icon={createOutline} />
+              Descripción del hallazgo
+            </label>
+            <span>{description.length}/500</span>
+          </div>
+          <textarea
+            className="sst-textarea"
+            id="evidencias-descripcion"
+            maxLength={500}
+            onChange={(event) => setDescription(event.target.value)}
+            placeholder="Describe aquí el hallazgo, incluye detalles relevantes..."
+            rows={2}
+            value={description}
+          />
+        </section>
+
+        <div className="evidencias__footer">
+          <button className="sst-button sst-button--outline" onClick={() => navigate('/inspeccion')} type="button">
+            <IonIcon aria-hidden="true" icon={chevronBackOutline} />
+            Volver al formulario
+          </button>
+          <button className="sst-button sst-button--primary" onClick={() => navigate('/firma')} type="button">
+            <IonIcon aria-hidden="true" icon={checkmarkDoneOutline} />
+            Guardar evidencia
+          </button>
+        </div>
+      </div>
+    </PageShell>
   );
 };
 

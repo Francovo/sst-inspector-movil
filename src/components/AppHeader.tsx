@@ -8,7 +8,7 @@ import { useAppMenu } from '../features/navigation/menuContext';
 import BrandMark from './BrandMark';
 import './AppHeader.css';
 
-type AppHeaderProps = {
+export type AppHeaderProps = {
   /** Connection state rendered by the status pill on the right. */
   online?: boolean;
   /** Renders the hamburger button. Visual only while the shell is not built. */

@@ -4,19 +4,19 @@ import {
   arrowForwardOutline,
   businessOutline,
   chevronBackOutline,
-  chevronDownOutline,
-  eyeOffOutline,
-  eyeOutline,
   lockClosedOutline,
   mailOutline,
   personOutline,
   shieldCheckmarkOutline,
 } from 'ionicons/icons';
 import type { JSX } from 'react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import BrandMark from '../../components/BrandMark';
+import NoteBanner from '../../components/NoteBanner';
+import PasswordField from '../../components/form/PasswordField';
+import SelectField from '../../components/form/SelectField';
+import TextField from '../../components/form/TextField';
 import './Registro.css';
 
 /**
@@ -25,8 +25,6 @@ import './Registro.css';
  */
 const Registro = (): JSX.Element => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   return (
     <IonPage>
@@ -66,116 +64,49 @@ const Registro = (): JSX.Element => {
                   navigate('/inicio');
                 }}
               >
-                <div className="sst-field">
-                  <label className="sst-field__label" htmlFor="registro-nombre">
-                    Nombre completo *
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={personOutline} />
-                    </span>
-                    <input
-                      autoComplete="name"
-                      className="sst-input"
-                      id="registro-nombre"
-                      placeholder="Ingresa tu nombre y apellidos"
-                      type="text"
-                    />
-                  </div>
-                </div>
+                <TextField
+                  autoComplete="name"
+                  icon={personOutline}
+                  id="registro-nombre"
+                  label="Nombre completo *"
+                  placeholder="Ingresa tu nombre y apellidos"
+                  type="text"
+                />
 
-                <div className="sst-field">
-                  <label className="sst-field__label" htmlFor="registro-email">
-                    Correo institucional
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={mailOutline} />
-                    </span>
-                    <input
-                      autoComplete="email"
-                      className="sst-input"
-                      id="registro-email"
-                      placeholder="ejemplo@empresa.com"
-                      type="email"
-                    />
-                  </div>
-                </div>
+                <TextField
+                  autoComplete="email"
+                  icon={mailOutline}
+                  id="registro-email"
+                  label="Correo institucional"
+                  placeholder="ejemplo@empresa.com"
+                  type="email"
+                />
 
-                <div className="sst-field registro__field--password">
-                  <label className="sst-field__label" htmlFor="registro-password">
-                    Contraseña
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={lockClosedOutline} />
-                    </span>
-                    <input
-                      autoComplete="new-password"
-                      className="sst-input"
-                      id="registro-password"
-                      placeholder="Mínimo 8 caracteres"
-                      type={showPassword ? 'text' : 'password'}
-                    />
-                    <button
-                      aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                      className="registro__eye"
-                      onClick={() => setShowPassword((current) => !current)}
-                      type="button"
-                    >
-                      <IonIcon icon={showPassword ? eyeOffOutline : eyeOutline} />
-                    </button>
-                  </div>
-                </div>
+                <PasswordField
+                  autoComplete="new-password"
+                  icon={lockClosedOutline}
+                  id="registro-password"
+                  label="Contraseña"
+                  placeholder="Mínimo 8 caracteres"
+                />
 
-                <div className="sst-field registro__field--password">
-                  <label className="sst-field__label" htmlFor="registro-confirmacion">
-                    Confirmar contraseña
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={lockClosedOutline} />
-                    </span>
-                    <input
-                      autoComplete="new-password"
-                      className="sst-input"
-                      id="registro-confirmacion"
-                      placeholder="Repite tu contraseña"
-                      type={showConfirmation ? 'text' : 'password'}
-                    />
-                    <button
-                      aria-label={showConfirmation ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                      className="registro__eye"
-                      onClick={() => setShowConfirmation((current) => !current)}
-                      type="button"
-                    >
-                      <IonIcon icon={showConfirmation ? eyeOffOutline : eyeOutline} />
-                    </button>
-                  </div>
-                </div>
+                <PasswordField
+                  autoComplete="new-password"
+                  icon={lockClosedOutline}
+                  id="registro-confirmacion"
+                  label="Confirmar contraseña"
+                  placeholder="Repite tu contraseña"
+                />
 
-                <div className="sst-field">
-                  <label className="sst-field__label" htmlFor="registro-empresa">
-                    Empresa
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={businessOutline} />
-                    </span>
-                    <select className="registro__select" defaultValue="" id="registro-empresa">
-                      <option disabled value="">
-                        Selecciona tu empresa
-                      </option>
-                      <option value="cafe">Industrias del Café S.A.S.</option>
-                      <option value="constructora">Constructora Bolívar</option>
-                      <option value="logistica">Logística &amp; Envíos del Caribe</option>
-                      <option value="manufacturas">Manufacturas Andinas</option>
-                    </select>
-                    <span aria-hidden="true" className="registro__chevron">
-                      <IonIcon icon={chevronDownOutline} />
-                    </span>
-                  </div>
-                </div>
+                <SelectField defaultValue="" icon={businessOutline} id="registro-empresa" label="Empresa">
+                  <option disabled value="">
+                    Selecciona tu empresa
+                  </option>
+                  <option value="cafe">Industrias del Café S.A.S.</option>
+                  <option value="constructora">Constructora Bolívar</option>
+                  <option value="logistica">Logística &amp; Envíos del Caribe</option>
+                  <option value="manufacturas">Manufacturas Andinas</option>
+                </SelectField>
 
                 <div className="registro__terms">
                   <input id="registro-terminos" type="checkbox" />
@@ -208,16 +139,10 @@ const Registro = (): JSX.Element => {
               </form>
             </section>
 
-            <aside className="sst-note sst-note--success">
-              <IonIcon aria-hidden="true" icon={shieldCheckmarkOutline} />
-              <div>
-                <h3>Tu información está segura</h3>
-                <p>
-                  Utilizamos medidas de seguridad para proteger tus datos personales y cumplir con la normativa vigente
-                  de protección de datos.
-                </p>
-              </div>
-            </aside>
+            <NoteBanner icon={shieldCheckmarkOutline} title="Tu información está segura" tone="success">
+              Utilizamos medidas de seguridad para proteger tus datos personales y cumplir con la normativa vigente de
+              protección de datos.
+            </NoteBanner>
 
             <footer className="registro__footer">
               <div className="registro__footer-brand">

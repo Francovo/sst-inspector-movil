@@ -1,5 +1,7 @@
 import { createContext, useContext } from 'react';
 
+import { DEMO_USER } from '../session/demoUser';
+
 export type Evidence = {
   id: string;
   /** Image URL: a bundled asset or an object URL for a photo picked by the user. */
@@ -31,8 +33,8 @@ const DEMO_EVIDENCES: Evidence[] = [
 ];
 
 export const INITIAL_DRAFT: InspectionDraft = {
-  responsable: 'Johan Sebastián Montealegre',
-  cargo: 'Inspector SST Líder',
+  responsable: DEMO_USER.fullName,
+  cargo: DEMO_USER.role,
   signature: null,
   signedAt: null,
   evidences: DEMO_EVIDENCES,

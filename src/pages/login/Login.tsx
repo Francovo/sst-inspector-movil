@@ -4,18 +4,18 @@ import {
   cameraOutline,
   clipboardOutline,
   cloudOfflineOutline,
-  eyeOffOutline,
-  eyeOutline,
   lockClosedOutline,
   mailOutline,
   personAddOutline,
   syncOutline,
 } from 'ionicons/icons';
 import type { JSX } from 'react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import BrandMark from '../../components/BrandMark';
+import NoteBanner from '../../components/NoteBanner';
+import PasswordField from '../../components/form/PasswordField';
+import TextField from '../../components/form/TextField';
 import './Login.css';
 
 /**
@@ -24,7 +24,6 @@ import './Login.css';
  */
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <IonPage>
@@ -69,49 +68,22 @@ const Login = (): JSX.Element => {
                   navigate('/inicio');
                 }}
               >
-                <div className="sst-field">
-                  <label className="sst-field__label" htmlFor="login-email">
-                    Correo institucional
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={mailOutline} />
-                    </span>
-                    <input
-                      autoComplete="email"
-                      className="sst-input"
-                      id="login-email"
-                      placeholder="ejemplo@empresa.com"
-                      type="email"
-                    />
-                  </div>
-                </div>
+                <TextField
+                  autoComplete="email"
+                  icon={mailOutline}
+                  id="login-email"
+                  label="Correo institucional"
+                  placeholder="ejemplo@empresa.com"
+                  type="email"
+                />
 
-                <div className="sst-field login__field--password">
-                  <label className="sst-field__label" htmlFor="login-password">
-                    Contraseña
-                  </label>
-                  <div className="sst-field__control">
-                    <span aria-hidden="true" className="sst-field__icon">
-                      <IonIcon icon={lockClosedOutline} />
-                    </span>
-                    <input
-                      autoComplete="current-password"
-                      className="sst-input"
-                      id="login-password"
-                      placeholder="Ingresa tu contraseña"
-                      type={showPassword ? 'text' : 'password'}
-                    />
-                    <button
-                      aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                      className="login__eye"
-                      onClick={() => setShowPassword((current) => !current)}
-                      type="button"
-                    >
-                      <IonIcon icon={showPassword ? eyeOffOutline : eyeOutline} />
-                    </button>
-                  </div>
-                </div>
+                <PasswordField
+                  autoComplete="current-password"
+                  icon={lockClosedOutline}
+                  id="login-password"
+                  label="Contraseña"
+                  placeholder="Ingresa tu contraseña"
+                />
 
                 <div className="login__row">
                   <label className="login__check" htmlFor="login-remember">
@@ -142,16 +114,10 @@ const Login = (): JSX.Element => {
               </form>
             </section>
 
-            <section className="sst-note sst-note--success">
-              <IonIcon aria-hidden="true" icon={cloudOfflineOutline} />
-              <div>
-                <h3>Modo sin conexión</h3>
-                <p>
-                  Puedes realizar inspecciones, guardar tus datos y evidencias, incluso sin internet. Se sincronizarán
-                  automáticamente cuando tengas conexión.
-                </p>
-              </div>
-            </section>
+            <NoteBanner icon={cloudOfflineOutline} title="Modo sin conexión" tone="success">
+              Puedes realizar inspecciones, guardar tus datos y evidencias, incluso sin internet. Se sincronizarán
+              automáticamente cuando tengas conexión.
+            </NoteBanner>
 
             <div aria-label="Funciones de la aplicación" className="login__features">
               <div className="login__feature">

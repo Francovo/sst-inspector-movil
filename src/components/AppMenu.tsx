@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAppMenu } from '../features/navigation/menuContext';
+import { DEMO_USER } from '../features/session/demoUser';
 
 import BrandMark from './BrandMark';
 import './AppMenu.css';
@@ -141,11 +142,11 @@ const AppMenu = (): JSX.Element | null => {
           <button className="app-menu__profile" onClick={closeMenu} type="button">
             <span className="app-menu__profile-left">
               <span aria-hidden="true" className="app-menu__avatar">
-                JM
+                {DEMO_USER.initials}
               </span>
               <span>
-                <strong>Sebastián Montealegre</strong>
-                <small>Inspector SST</small>
+                <strong>{DEMO_USER.shortName}</strong>
+                <small>{DEMO_USER.role}</small>
               </span>
             </span>
             <IonIcon aria-hidden="true" icon={chevronForward} />

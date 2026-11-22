@@ -100,56 +100,6 @@
   gap: 10px;
 }
 
-.registro__field--password .sst-input {
-  padding-right: 34px;
-}
-
-.registro__eye {
-  position: absolute;
-  top: 0;
-  right: 8px;
-  bottom: 0;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--sst-text-soft);
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.registro__select {
-  width: 100%;
-  padding: 8px 32px 8px 34px;
-  border: 1px solid var(--sst-border);
-  border-radius: var(--sst-radius-sm);
-  background: var(--sst-surface);
-  color: var(--sst-text-muted);
-  font: inherit;
-  font-size: 0.75rem;
-  appearance: none;
-  cursor: pointer;
-}
-
-.registro__select:focus {
-  border-color: var(--sst-green);
-  outline: none;
-  box-shadow: 0 0 0 1px var(--sst-green);
-}
-
-.registro__chevron {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  color: var(--sst-text-soft);
-  font-size: 14px;
-  pointer-events: none;
-}
-
 .registro__terms {
   display: flex;
   align-items: flex-start;

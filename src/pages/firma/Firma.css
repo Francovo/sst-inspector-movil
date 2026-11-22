@@ -5,31 +5,6 @@
   padding: var(--sst-space-3) 14px var(--sst-space-4);
 }
 
-.firma__heading {
-  padding: 0 var(--sst-space-1);
-}
-
-.firma__title {
-  display: flex;
-  align-items: center;
-  gap: var(--sst-space-2);
-  margin: 0;
-  color: var(--sst-text);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.firma__title ion-icon {
-  color: #334155;
-  font-size: 20px;
-}
-
-.firma__subtitle {
-  margin: 2px 0 0;
-  color: var(--sst-text-muted);
-  font-size: 0.6875rem;
-}
-
 .firma__card {
   display: flex;
   flex-direction: column;
