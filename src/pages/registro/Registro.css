@@ -1,0 +1,234 @@
+.registro {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.registro__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sst-space-2);
+  padding: calc(10px + env(safe-area-inset-top)) 14px 12px;
+  background: var(--sst-navy);
+  color: #fff;
+}
+
+.registro__back {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  padding: 2px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.registro__brand {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.registro__brand h1 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.registro__brand p {
+  margin: 2px 0 0;
+  color: #cbd5e1;
+  font-size: 0.625rem;
+}
+
+.registro__mark {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sst-green);
+  color: #fff;
+}
+
+.registro__mark svg {
+  width: 17px;
+  height: 17px;
+}
+
+.registro__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 14px calc(16px + env(safe-area-inset-bottom));
+}
+
+.registro__card {
+  padding: 16px;
+  border-radius: var(--sst-radius-lg);
+}
+
+.registro__heading {
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.registro__heading h2 {
+  margin: 0;
+  color: var(--sst-navy);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.registro__heading p {
+  max-width: 280px;
+  margin: 3px auto 0;
+  color: var(--sst-text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+}
+
+.registro__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.registro__field--password .sst-input {
+  padding-right: 34px;
+}
+
+.registro__eye {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sst-text-soft);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.registro__select {
+  width: 100%;
+  padding: 8px 32px 8px 34px;
+  border: 1px solid var(--sst-border);
+  border-radius: var(--sst-radius-sm);
+  background: var(--sst-surface);
+  color: var(--sst-text-muted);
+  font: inherit;
+  font-size: 0.75rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.registro__select:focus {
+  border-color: var(--sst-green);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--sst-green);
+}
+
+.registro__chevron {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  color: var(--sst-text-soft);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.registro__terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding-top: 2px;
+  color: var(--sst-text-muted);
+  font-size: 0.625rem;
+  line-height: 1.4;
+}
+
+.registro__terms input {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--sst-green);
+}
+
+.registro__terms label {
+  margin-top: -1px;
+}
+
+.registro__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sst-text);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.registro__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sst-space-2);
+  padding: 0 4px;
+}
+
+.registro__footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.registro__footer-mark {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sst-green);
+  color: #fff;
+}
+
+.registro__footer-mark svg {
+  width: 11px;
+  height: 11px;
+}
+
+.registro__footer p {
+  margin: 0;
+  color: var(--sst-text);
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.registro__footer small {
+  display: block;
+  color: var(--sst-text-soft);
+  font-size: 0.5rem;
+  font-weight: 400;
+}
+
+.registro__version {
+  color: var(--sst-text-soft);
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.5625rem;
+}
