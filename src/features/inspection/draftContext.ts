@@ -9,6 +9,8 @@ export type Evidence = {
   alt: string;
   /** Path inside the app's Filesystem once the photo is persisted. */
   path?: string;
+  /** Bundled demo asset: its URL is safe to persist between sessions. */
+  bundled?: boolean;
 };
 
 /** Photo captured by the camera plugin or picked by the web file input. */
@@ -37,9 +39,24 @@ export type InspectionDraft = {
 };
 
 const DEMO_EVIDENCES: Evidence[] = [
-  { id: 'E-01', src: '/img/inspeccion1.jpg', alt: 'Revisión de un vehículo en el patio' },
-  { id: 'E-02', src: '/img/inspeccion2.jpg', alt: 'Verificación de una estructura en obra' },
-  { id: 'E-03', src: '/img/inspeccion3.jpg', alt: 'Supervisión de trabajos en altura' },
+  {
+    id: 'E-01',
+    src: '/img/inspeccion1.jpg',
+    alt: 'Revisión de un vehículo en el patio',
+    bundled: true,
+  },
+  {
+    id: 'E-02',
+    src: '/img/inspeccion2.jpg',
+    alt: 'Verificación de una estructura en obra',
+    bundled: true,
+  },
+  {
+    id: 'E-03',
+    src: '/img/inspeccion3.jpg',
+    alt: 'Supervisión de trabajos en altura',
+    bundled: true,
+  },
 ];
 
 export const INITIAL_DRAFT: InspectionDraft = {
