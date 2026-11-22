@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 
 import { InspectionDraftProvider } from './features/inspection/InspectionDraftProvider';
+import { AppMenuProvider } from './features/navigation/AppMenuProvider';
 import Dashboard from './pages/dashboard/Dashboard';
 import Evidencias from './pages/evidencias/Evidencias';
 import Firma from './pages/firma/Firma';
@@ -41,18 +42,20 @@ const App = (): JSX.Element => (
   <IonApp>
     <InspectionDraftProvider>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path="/login" element={<Login />} />
-          <Route path="/registro" element={<Registro />} />
-          <Route path="/inicio" element={<Dashboard />} />
-          <Route path="/listas" element={<Listas />} />
-          <Route path="/inspeccion" element={<Formulario />} />
-          <Route path="/evidencias" element={<Evidencias />} />
-          <Route path="/firma" element={<Firma />} />
-          <Route path="/resumen" element={<Resumen />} />
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </IonRouterOutlet>
+        <AppMenuProvider>
+          <IonRouterOutlet>
+            <Route path="/login" element={<Login />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/inicio" element={<Dashboard />} />
+            <Route path="/listas" element={<Listas />} />
+            <Route path="/inspeccion" element={<Formulario />} />
+            <Route path="/evidencias" element={<Evidencias />} />
+            <Route path="/firma" element={<Firma />} />
+            <Route path="/resumen" element={<Resumen />} />
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </IonRouterOutlet>
+        </AppMenuProvider>
       </IonReactRouter>
     </InspectionDraftProvider>
   </IonApp>

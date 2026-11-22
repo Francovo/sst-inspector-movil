@@ -3,6 +3,8 @@ import { chevronBackOutline, cloudOfflineOutline, ellipsisVertical, menuOutline 
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAppMenu } from '../features/navigation/menuContext';
+
 import BrandMark from './BrandMark';
 import './AppHeader.css';
 
@@ -19,6 +21,7 @@ type AppHeaderProps = {
 
 const AppHeader = ({ online = true, withMenu = false, withOverflow = false, backTo }: AppHeaderProps): JSX.Element => {
   const navigate = useNavigate();
+  const { isOpen, openMenu } = useAppMenu();
 
   return (
     <header className="sst-header">
@@ -34,7 +37,14 @@ const AppHeader = ({ online = true, withMenu = false, withOverflow = false, back
           </button>
         ) : (
           withMenu && (
-            <button aria-label="Abrir menú" className="sst-header__icon-button" type="button">
+            <button
+              aria-controls="app-menu"
+              aria-expanded={isOpen}
+              aria-label="Abrir menú"
+              className="sst-header__icon-button"
+              onClick={openMenu}
+              type="button"
+            >
               <IonIcon aria-hidden="true" icon={menuOutline} />
             </button>
           )
