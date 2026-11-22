@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 
 import { InspectionDraftProvider } from './features/inspection/InspectionDraftProvider';
+import Dashboard from './pages/dashboard/Dashboard';
 import Firma from './pages/firma/Firma';
 import Login from './pages/login/Login';
 import Registro from './pages/registro/Registro';
@@ -40,6 +41,7 @@ const App = (): JSX.Element => (
         <IonRouterOutlet>
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
+          <Route path="/inicio" element={<Dashboard />} />
           <Route path="/firma" element={<Firma />} />
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
