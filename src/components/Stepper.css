@@ -1,0 +1,82 @@
+.sst-stepper {
+  position: relative;
+  padding: 10px 12px;
+  border: 1px solid var(--sst-border);
+  border-radius: var(--sst-radius-md);
+  background: var(--sst-surface);
+  box-shadow: var(--sst-shadow-card);
+}
+
+.sst-stepper__track {
+  position: absolute;
+  top: 22px;
+  right: 10%;
+  left: 10%;
+  height: 2px;
+  overflow: hidden;
+  background: var(--sst-border);
+}
+
+.sst-stepper__fill {
+  display: block;
+  height: 100%;
+  background: var(--sst-green);
+  transition: width 0.25s ease;
+}
+
+.sst-stepper__steps {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sst-stepper__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.sst-stepper__dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--sst-border-strong);
+  border-radius: 50%;
+  background: var(--sst-surface);
+  color: var(--sst-text-soft);
+  font-size: 0.625rem;
+  font-weight: 700;
+}
+
+.sst-stepper__dot ion-icon {
+  font-size: 12px;
+  stroke-width: 3;
+}
+
+.sst-stepper__step--done .sst-stepper__dot,
+.sst-stepper__step--current .sst-stepper__dot {
+  border-color: var(--sst-green);
+  background: var(--sst-green);
+  color: #fff;
+}
+
+.sst-stepper__step--current .sst-stepper__dot {
+  box-shadow: 0 0 0 4px #d1fae5;
+}
+
+.sst-stepper__label {
+  color: var(--sst-text-muted);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.sst-stepper__step--current .sst-stepper__label {
+  color: var(--sst-green-dark);
+  font-weight: 700;
+}

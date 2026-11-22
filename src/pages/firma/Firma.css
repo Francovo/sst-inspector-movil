@@ -1,0 +1,75 @@
+.firma {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--sst-space-3) 14px var(--sst-space-4);
+}
+
+.firma__heading {
+  padding: 0 var(--sst-space-1);
+}
+
+.firma__title {
+  display: flex;
+  align-items: center;
+  gap: var(--sst-space-2);
+  margin: 0;
+  color: var(--sst-text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.firma__title ion-icon {
+  color: #334155;
+  font-size: 20px;
+}
+
+.firma__subtitle {
+  margin: 2px 0 0;
+  color: var(--sst-text-muted);
+  font-size: 0.6875rem;
+}
+
+.firma__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--sst-space-4);
+  border-radius: var(--sst-radius-lg);
+}
+
+.firma__card-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: var(--sst-space-2);
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.firma__card-head ion-icon {
+  color: var(--sst-green-dark);
+  font-size: 16px;
+}
+
+.firma__card-head h3 {
+  margin: 0;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.firma__feedback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--sst-green-dark);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.firma__feedback ion-icon {
+  font-size: 15px;
+}

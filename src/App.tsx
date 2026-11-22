@@ -1,8 +1,10 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import type { JSX } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 
-import Home from './pages/Home';
+import Firma from './pages/firma/Firma';
+import Resumen from './pages/resumen/Resumen';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -20,28 +22,22 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
-
-/* Theme variables */
+/* Design tokens and shared UI primitives */
 import './theme/variables.css';
+import './theme/ui.css';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+// The mockup is light-only: the Stitch screens have no dark variant, so the
+// `dark.system.css` palette is intentionally not imported.
+const App = (): JSX.Element => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/firma" element={<Firma />} />
+        <Route path="/resumen" element={<Resumen />} />
+        <Route path="/" element={<Navigate to="/firma" replace />} />
+        <Route path="*" element={<Navigate to="/firma" replace />} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

@@ -1,0 +1,32 @@
+.sst-tabbar {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 6px 12px calc(6px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--sst-border);
+  background: var(--sst-surface);
+}
+
+.sst-tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 0;
+  background: none;
+  color: var(--sst-text-muted);
+  font-family: inherit;
+  font-size: 0.625rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sst-tabbar__item--active {
+  color: var(--sst-green);
+  font-weight: 600;
+}
+
+.sst-tabbar__icon {
+  font-size: 20px;
+}
