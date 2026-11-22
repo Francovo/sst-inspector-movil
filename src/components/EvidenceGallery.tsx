@@ -1,30 +1,30 @@
 import { IonContent, IonIcon, IonModal } from '@ionic/react';
 import { addOutline, closeOutline, imagesOutline } from 'ionicons/icons';
-import type { ChangeEvent, JSX } from 'react';
+import type { JSX } from 'react';
 
-import type { Evidence } from '../features/inspection/draftContext';
+import type { Evidence, PhotoInput } from '../features/inspection/draftContext';
+import PhotoFileInput from '../features/media/PhotoFileInput';
+import { usePhotoCapture } from '../features/media/usePhotoCapture';
+
+import ErrorToast from './ErrorToast';
 import './EvidenceGallery.css';
 
 type EvidenceGalleryProps = {
   evidences: readonly Evidence[];
   isOpen: boolean;
-  onAdd: (files: File[]) => void;
+  onAdd: (photos: PhotoInput[]) => void | Promise<void>;
   onClose: () => void;
 };
 
 /**
  * Full gallery of the evidence attached to the report.
- * The "Agregar foto" control opens the device picker; picked images become
- * object URLs handled by the inspection draft.
+ * "Agregar foto" opens the native camera/photo picker on device and the file
+ * input on the web; both feed the same inspection draft.
  */
 const EvidenceGallery = ({ evidences, isOpen, onAdd, onClose }: EvidenceGalleryProps): JSX.Element => {
-  const handleFiles = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []);
-    if (files.length) onAdd(files);
-
-    // Allow picking the same file again right away.
-    event.target.value = '';
-  };
+  const { capture, inputRef, handleFileChange, error, clearError } = usePhotoCapture({
+    onPhoto: (photo) => onAdd([photo]),
+  });
 
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onClose}>
@@ -54,11 +54,13 @@ const EvidenceGallery = ({ evidences, isOpen, onAdd, onClose }: EvidenceGalleryP
             ))}
           </ul>
 
-          <label className="gallery__add">
+          <button className="gallery__add" onClick={() => void capture('prompt')} type="button">
             <IonIcon aria-hidden="true" icon={addOutline} />
             Agregar foto
-            <input accept="image/*" hidden multiple onChange={handleFiles} type="file" />
-          </label>
+          </button>
+
+          <PhotoFileInput inputRef={inputRef} onChange={handleFileChange} />
+          <ErrorToast message={error} onDismiss={clearError} />
         </div>
       </IonContent>
     </IonModal>

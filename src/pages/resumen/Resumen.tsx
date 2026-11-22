@@ -29,7 +29,7 @@ import './Resumen.css';
  * signature and evidences come from the inspection draft.
  */
 const Resumen = (): JSX.Element => {
-  const { draft, addEvidences } = useInspectionDraft();
+  const { draft, addPhotos } = useInspectionDraft();
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const answeredPercent = Math.round((DEMO_INSPECTION.answered / DEMO_INSPECTION.total) * 100);
   const isSigned = Boolean(draft.signature);
@@ -42,7 +42,7 @@ const Resumen = (): JSX.Element => {
         <EvidenceGallery
           evidences={draft.evidences}
           isOpen={isGalleryOpen}
-          onAdd={addEvidences}
+          onAdd={addPhotos}
           onClose={() => setIsGalleryOpen(false)}
         />
       }

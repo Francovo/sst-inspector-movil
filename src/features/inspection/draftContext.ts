@@ -4,9 +4,19 @@ import { DEMO_USER } from '../session/demoUser';
 
 export type Evidence = {
   id: string;
-  /** Image URL: a bundled asset or an object URL for a photo picked by the user. */
+  /** Image URL: a bundled asset, object URL or data URL. */
   src: string;
   alt: string;
+  /** Path inside the app's Filesystem once the photo is persisted. */
+  path?: string;
+};
+
+/** Photo captured by the camera plugin or picked by the web file input. */
+export type PhotoInput = {
+  dataUrl: string;
+  /** MIME subtype of the image, such as `jpeg` or `png`. */
+  format: string;
+  alt?: string;
 };
 
 /**
@@ -45,7 +55,7 @@ export type InspectionDraftValue = {
   setResponsable: (value: string) => void;
   setCargo: (value: string) => void;
   setSignature: (value: string | null) => void;
-  addEvidences: (files: File[]) => void;
+  addPhotos: (photos: PhotoInput[]) => void | Promise<void>;
   removeEvidence: (id: string) => void;
 };
 

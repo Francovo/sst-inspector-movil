@@ -9,38 +9,34 @@ import {
   imagesOutline,
   informationCircle,
 } from 'ionicons/icons';
-import type { ChangeEvent, JSX } from 'react';
-import { useRef, useState } from 'react';
+import type { JSX } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import ErrorToast from '../../components/ErrorToast';
 import NoteBanner from '../../components/NoteBanner';
 import PageHeading from '../../components/PageHeading';
 import PageShell from '../../components/PageShell';
 import Stepper from '../../components/Stepper';
 import { INSPECTION_STEPS } from '../../features/inspection/constants';
 import { useInspectionDraft } from '../../features/inspection/draftContext';
+import PhotoFileInput from '../../features/media/PhotoFileInput';
+import { usePhotoCapture } from '../../features/media/usePhotoCapture';
 import './Evidencias.css';
 
 /**
  * Visual mockup of the "Captura de Evidencias" screen.
- * The two buttons open the device picker and append the photo to the shared
- * draft, which is the same evidence list shown on the summary.
+ * Camera/photos are captured through Capacitor on device and through a file
+ * input on the web; both append to the shared inspection draft.
  */
 const Evidencias = (): JSX.Element => {
   const navigate = useNavigate();
-  const { draft, addEvidences, removeEvidence } = useInspectionDraft();
-  const cameraInput = useRef<HTMLInputElement>(null);
-  const galleryInput = useRef<HTMLInputElement>(null);
+  const { draft, addPhotos, removeEvidence } = useInspectionDraft();
   const [description, setDescription] = useState('');
   const preview = draft.evidences.at(-1);
-
-  const handleFiles = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []);
-    if (files.length) addEvidences(files);
-
-    // Allow picking the same file again right away.
-    event.target.value = '';
-  };
+  const { capture, inputRef, handleFileChange, error, clearError } = usePhotoCapture({
+    onPhoto: (photo) => addPhotos([photo]),
+  });
 
   return (
     <PageShell header={{ withMenu: true }} tab="evidencias">
@@ -88,22 +84,18 @@ const Evidencias = (): JSX.Element => {
         </section>
 
         <div className="evidencias__actions">
-          <button className="sst-button sst-button--primary" onClick={() => cameraInput.current?.click()} type="button">
+          <button className="sst-button sst-button--primary" onClick={() => void capture('camera')} type="button">
             <IonIcon aria-hidden="true" icon={cameraOutline} />
             Tomar foto
           </button>
-          <button
-            className="sst-button sst-button--outline"
-            onClick={() => galleryInput.current?.click()}
-            type="button"
-          >
+          <button className="sst-button sst-button--outline" onClick={() => void capture('gallery')} type="button">
             <IonIcon aria-hidden="true" icon={imagesOutline} />
             Elegir de galería
           </button>
         </div>
 
-        <input accept="image/*" capture="environment" hidden onChange={handleFiles} ref={cameraInput} type="file" />
-        <input accept="image/*" hidden onChange={handleFiles} ref={galleryInput} type="file" />
+        <PhotoFileInput inputRef={inputRef} onChange={handleFileChange} />
+        <ErrorToast message={error} onDismiss={clearError} />
 
         <section className="sst-card evidencias__description">
           <div className="evidencias__description-head">
