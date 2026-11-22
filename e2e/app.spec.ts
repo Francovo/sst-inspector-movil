@@ -58,6 +58,48 @@ test('adds a photo on the evidence screen and keeps it in the summary', async ({
   await expect(page.getByText('E-04')).toBeVisible();
 });
 
+test('signs in and reaches the dashboard', async ({ page }) => {
+  await page.goto('/login');
+
+  await page.getByRole('button', { name: /ingresar/i }).click();
+
+  await expect(page.getByRole('heading', { name: 'Resumen de inspecciones' })).toBeVisible();
+  await expect(page.getByText('¡Hola, Inspector!')).toBeVisible();
+});
+
+test('opens the registration screen from the login', async ({ page }) => {
+  await page.goto('/login');
+
+  await page.getByRole('button', { name: /crear cuenta/i }).click();
+
+  await expect(page.getByRole('heading', { name: 'Registro de usuario' })).toBeVisible();
+  await expect(page.getByLabel('Empresa')).toBeVisible();
+});
+
+test('moves from the dashboard to a checklist and its form', async ({ page }) => {
+  await page.goto('/inicio');
+
+  await page.getByRole('button', { name: /nueva inspección/i }).click();
+  await expect(page.getByRole('heading', { name: 'Listas de chequeo SST' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Seleccionar' }).first().click();
+  await expect(page.getByRole('heading', { name: 'Formulario de inspección' })).toBeVisible();
+
+  await page.getByRole('button', { name: /siguiente/i }).click();
+  await expect(page.getByRole('heading', { name: 'Captura de evidencias' })).toBeVisible();
+});
+
+test('opens the side menu and navigates with it', async ({ page }) => {
+  await page.goto('/listas');
+
+  await page.getByRole('button', { name: 'Abrir menú' }).click();
+  const menu = page.getByRole('dialog', { name: 'Menú lateral' });
+  await expect(menu).toBeVisible();
+
+  await menu.getByRole('button', { name: 'Inicio' }).click();
+  await expect(page.getByRole('heading', { name: 'Resumen de inspecciones' })).toBeVisible();
+});
+
 test('shows the summary indicators and the app shell', async ({ page }) => {
   await page.goto('/resumen');
 
