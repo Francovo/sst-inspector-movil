@@ -44,7 +44,7 @@ const Formulario = (): JSX.Element => {
   const progress = Math.round((QUESTION.position / QUESTION.total) * 100);
 
   return (
-    <PageShell header={{ backTo: '/listas', online: false }} tab="inspecciones">
+    <PageShell header={{ backTo: '/listas' }} tab="inspecciones">
       <div className="inspeccion">
         <PageHeading subtitle="Revisa y responde cada ítem de la lista de chequeo" title="Formulario de inspección" />
 

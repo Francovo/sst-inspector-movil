@@ -4,24 +4,24 @@ import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppMenu } from '../features/navigation/menuContext';
+import { useNetworkStatus } from '../features/network/networkContext';
 
 import BrandMark from './BrandMark';
 import './AppHeader.css';
 
 export type AppHeaderProps = {
-  /** Connection state rendered by the status pill on the right. */
-  online?: boolean;
-  /** Renders the hamburger button. Visual only while the shell is not built. */
+  /** Renders the hamburger button. */
   withMenu?: boolean;
-  /** Renders the overflow button. Visual only while the shell is not built. */
+  /** Renders the overflow button. Visual only while the menu is not built. */
   withOverflow?: boolean;
   /** Renders a back button that navigates to this route instead of the menu. */
   backTo?: string;
 };
 
-const AppHeader = ({ online = true, withMenu = false, withOverflow = false, backTo }: AppHeaderProps): JSX.Element => {
+const AppHeader = ({ withMenu = false, withOverflow = false, backTo }: AppHeaderProps): JSX.Element => {
   const navigate = useNavigate();
   const { isOpen, openMenu } = useAppMenu();
+  const { online } = useNetworkStatus();
 
   return (
     <header className="sst-header">

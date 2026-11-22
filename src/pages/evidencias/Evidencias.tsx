@@ -43,7 +43,7 @@ const Evidencias = (): JSX.Element => {
   };
 
   return (
-    <PageShell header={{ online: false, withMenu: true }} tab="evidencias">
+    <PageShell header={{ withMenu: true }} tab="evidencias">
       <div className="evidencias">
         <Stepper current={2} steps={INSPECTION_STEPS} />
 

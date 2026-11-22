@@ -20,7 +20,7 @@ const Firma = (): JSX.Element => {
   const { draft, setResponsable, setCargo, setSignature } = useInspectionDraft();
 
   return (
-    <PageShell header={{ online: false, withMenu: true, withOverflow: true }} tab="inspecciones">
+    <PageShell header={{ withMenu: true, withOverflow: true }} tab="inspecciones">
       <div className="firma">
         <Stepper current={4} steps={INSPECTION_STEPS} />
 

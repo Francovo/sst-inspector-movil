@@ -5,6 +5,7 @@ import {
   calendarClearOutline,
   chevronForward,
   clipboardOutline,
+  cloudOfflineOutline,
   informationCircle,
   pieChartOutline,
   syncOutline,
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 import NoteBanner from '../../components/NoteBanner';
 import PageShell from '../../components/PageShell';
+import { useNetworkStatus } from '../../features/network/networkContext';
 import { DEMO_USER } from '../../features/session/demoUser';
 import './Dashboard.css';
 
@@ -58,6 +60,7 @@ const METRICS = [
  */
 const Dashboard = (): JSX.Element => {
   const navigate = useNavigate();
+  const { online } = useNetworkStatus();
 
   return (
     <PageShell header={{ withMenu: true }} tab="inicio">
@@ -158,8 +161,14 @@ const Dashboard = (): JSX.Element => {
           </button>
         </section>
 
-        <NoteBanner icon={informationCircle} title="Estás trabajando en línea." tone="info">
-          Puedes realizar inspecciones y guardar tus datos. Cuando tengas internet, se sincronizarán automáticamente.
+        <NoteBanner
+          icon={online ? informationCircle : cloudOfflineOutline}
+          title={online ? 'Estás trabajando en línea.' : 'Estás trabajando sin conexión.'}
+          tone={online ? 'info' : 'success'}
+        >
+          {online
+            ? 'Puedes realizar inspecciones y guardar tus datos. Cuando tengas internet, se sincronizarán automáticamente.'
+            : 'Tus inspecciones y evidencias se guardan en este dispositivo. Se sincronizarán cuando recuperes la conexión.'}
         </NoteBanner>
       </div>
     </PageShell>

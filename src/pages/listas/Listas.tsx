@@ -61,7 +61,7 @@ const Listas = (): JSX.Element => {
   );
 
   return (
-    <PageShell header={{ online: false, withMenu: true }} tab="inspecciones">
+    <PageShell header={{ withMenu: true }} tab="inspecciones">
       <div className="listas">
         <PageHeading
           subtitle="Selecciona la lista que deseas utilizar para tu inspección"
