@@ -6,6 +6,7 @@ import { Navigate, Route } from 'react-router-dom';
 import { InspectionDraftProvider } from './features/inspection/InspectionDraftProvider';
 import Dashboard from './pages/dashboard/Dashboard';
 import Firma from './pages/firma/Firma';
+import Formulario from './pages/formulario/Formulario';
 import Listas from './pages/listas/Listas';
 import Login from './pages/login/Login';
 import Registro from './pages/registro/Registro';
@@ -44,6 +45,7 @@ const App = (): JSX.Element => (
           <Route path="/registro" element={<Registro />} />
           <Route path="/inicio" element={<Dashboard />} />
           <Route path="/listas" element={<Listas />} />
+          <Route path="/inspeccion" element={<Formulario />} />
           <Route path="/firma" element={<Firma />} />
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
