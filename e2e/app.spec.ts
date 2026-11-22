@@ -27,6 +27,22 @@ test('carries the signature data into the summary', async ({ page }) => {
   await expect(page.getByText('Coordinadora SST').first()).toBeVisible();
 });
 
+test('opens the evidence gallery and adds a photo', async ({ page }) => {
+  await page.goto('/resumen');
+
+  await page
+    .getByRole('button', { name: /ver todas/i })
+    .first()
+    .click();
+  await expect(page.getByRole('heading', { name: /evidencias/i })).toBeVisible();
+  await expect(page.locator('.gallery__item')).toHaveCount(3);
+
+  await page.setInputFiles('input[type="file"]', 'public/img/inspeccion1.jpg');
+
+  await expect(page.locator('.gallery__item')).toHaveCount(4);
+  await expect(page.getByText('E-04')).toBeVisible();
+});
+
 test('shows the summary indicators and the app shell', async ({ page }) => {
   await page.goto('/resumen');
 

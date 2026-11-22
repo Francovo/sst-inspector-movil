@@ -1,0 +1,124 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sst-space-4);
+  padding: calc(var(--sst-space-4) + env(safe-area-inset-top)) 14px
+    calc(var(--sst-space-4) + env(safe-area-inset-bottom));
+}
+
+.gallery__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sst-space-2);
+}
+
+.gallery__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--sst-navy);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.gallery__title ion-icon {
+  color: var(--sst-green-dark);
+  font-size: 18px;
+}
+
+.gallery__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--sst-green);
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 700;
+}
+
+.gallery__hint {
+  margin: 2px 0 0;
+  color: var(--sst-text-muted);
+  font-size: 0.6875rem;
+}
+
+.gallery__close {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--sst-border);
+  border-radius: 50%;
+  background: var(--sst-surface);
+  color: var(--sst-text-muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sst-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery__item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  border: 1px solid var(--sst-border);
+  border-radius: var(--sst-radius-md);
+  background: var(--sst-surface-sunken);
+}
+
+.gallery__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery__id {
+  position: absolute;
+  right: var(--sst-space-2);
+  bottom: var(--sst-space-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+  font-size: 0.5625rem;
+  font-weight: 600;
+}
+
+.gallery__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  border: 1px dashed var(--sst-border-strong);
+  border-radius: var(--sst-radius-md);
+  background: var(--sst-surface-sunken);
+  color: var(--sst-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gallery__add ion-icon {
+  color: var(--sst-green-dark);
+  font-size: 17px;
+}
+
+.gallery__add:active {
+  transform: scale(0.99);
+}

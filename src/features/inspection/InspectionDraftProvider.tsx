@@ -1,7 +1,7 @@
 import type { JSX, ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
-import { INITIAL_DRAFT, InspectionDraftContext, formatSignedAt } from './draftContext';
+import { INITIAL_DRAFT, InspectionDraftContext, evidenceId, formatSignedAt } from './draftContext';
 import type { InspectionDraft, InspectionDraftValue } from './draftContext';
 
 type InspectionDraftProviderProps = {
@@ -9,7 +9,7 @@ type InspectionDraftProviderProps = {
 };
 
 /**
- * Keeps the signature draft shared between the "Firma" and "Resumen" screens.
+ * Keeps the inspection draft shared between the "Firma" and "Resumen" screens.
  * Replace it with real state management once the inspection domain exists.
  */
 export const InspectionDraftProvider = ({ children }: InspectionDraftProviderProps): JSX.Element => {
@@ -31,9 +31,24 @@ export const InspectionDraftProvider = ({ children }: InspectionDraftProviderPro
     }));
   }, []);
 
+  const addEvidences = useCallback(
+    (files: File[]) => {
+      // Object URLs are created outside the state updater so React can call the
+      // updater twice in development without leaking a second blob.
+      const created = files.map((file, index) => ({
+        id: evidenceId(draft.evidences.length + index + 1),
+        src: URL.createObjectURL(file),
+        alt: file.name.replace(/\.[^.]+$/, ''),
+      }));
+
+      setDraft((current) => ({ ...current, evidences: [...current.evidences, ...created] }));
+    },
+    [draft.evidences.length],
+  );
+
   const value = useMemo<InspectionDraftValue>(
-    () => ({ draft, setResponsable, setCargo, setSignature }),
-    [draft, setResponsable, setCargo, setSignature],
+    () => ({ draft, setResponsable, setCargo, setSignature, addEvidences }),
+    [draft, setResponsable, setCargo, setSignature, addEvidences],
   );
 
   return <InspectionDraftContext.Provider value={value}>{children}</InspectionDraftContext.Provider>;

@@ -15,9 +15,11 @@ import {
   warning,
 } from 'ionicons/icons';
 import type { JSX } from 'react';
+import { useState } from 'react';
 
 import AppHeader from '../../components/AppHeader';
 import AppTabBar from '../../components/AppTabBar';
+import EvidenceGallery from '../../components/EvidenceGallery';
 import { useInspectionDraft } from '../../features/inspection/draftContext';
 import './Resumen.css';
 
@@ -38,15 +40,11 @@ const INSPECTION = {
   findings: 3,
   nonConformities: 2,
   observations: 1,
-  evidences: [
-    { id: 'E-01', src: '/img/inspeccion1.jpg', alt: 'Revisión de un vehículo en el patio' },
-    { id: 'E-02', src: '/img/inspeccion2.jpg', alt: 'Verificación de una estructura en obra' },
-    { id: 'E-03', src: '/img/inspeccion3.jpg', alt: 'Supervisión de trabajos en altura' },
-  ],
 };
 
 const Resumen = (): JSX.Element => {
-  const { draft } = useInspectionDraft();
+  const { draft, addEvidences } = useInspectionDraft();
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const answeredPercent = Math.round((INSPECTION.answered / INSPECTION.total) * 100);
   const isSigned = Boolean(draft.signature);
 
@@ -157,20 +155,20 @@ const Resumen = (): JSX.Element => {
                 <IonIcon aria-hidden="true" icon={imagesOutline} />
                 Evidencia destacada
               </h3>
-              <button className="resumen__link" type="button">
-                Ver todas ({INSPECTION.evidences.length})
+              <button className="resumen__link" onClick={() => setIsGalleryOpen(true)} type="button">
+                Ver todas ({draft.evidences.length})
               </button>
             </div>
 
             <ul className="resumen__evidences">
-              {INSPECTION.evidences.map((evidence) => (
+              {draft.evidences.map((evidence) => (
                 <li className="resumen__evidence" key={evidence.id}>
                   <img alt={evidence.alt} height="96" src={evidence.src} width="96" />
                   <span className="resumen__evidence-id">{evidence.id}</span>
                 </li>
               ))}
               <li className="resumen__evidence-more">
-                <button type="button">
+                <button onClick={() => setIsGalleryOpen(true)} type="button">
                   <span aria-hidden="true">+</span>
                   <span>Ver todas las evidencias</span>
                 </button>
@@ -232,6 +230,13 @@ const Resumen = (): JSX.Element => {
           </div>
         </div>
       </IonContent>
+
+      <EvidenceGallery
+        evidences={draft.evidences}
+        isOpen={isGalleryOpen}
+        onAdd={addEvidences}
+        onClose={() => setIsGalleryOpen(false)}
+      />
 
       <AppTabBar active="inspecciones" />
     </IonPage>
