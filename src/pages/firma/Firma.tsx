@@ -9,6 +9,7 @@ import Stepper from '../../components/Stepper';
 import TextField from '../../components/form/TextField';
 import { INSPECTION_STEPS } from '../../features/inspection/constants';
 import { useInspectionDraft } from '../../features/inspection/draftContext';
+import { lightImpact } from '../../features/native/haptics';
 import './Firma.css';
 
 /**
@@ -58,7 +59,13 @@ const Firma = (): JSX.Element => {
 
           <div className="sst-field">
             <span className="sst-field__label">Firma del responsable *</span>
-            <SignaturePad onClear={() => setSignature(null)} onSave={setSignature} />
+            <SignaturePad
+              onClear={() => setSignature(null)}
+              onSave={(signature) => {
+                setSignature(signature);
+                lightImpact();
+              }}
+            />
           </div>
 
           {draft.signature && (

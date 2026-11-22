@@ -445,3 +445,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
+.resumen__share-action {
+  grid-column: 1 / -1;
+}

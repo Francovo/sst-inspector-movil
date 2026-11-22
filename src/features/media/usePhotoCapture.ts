@@ -2,6 +2,8 @@ import { Capacitor } from '@capacitor/core';
 import type { ChangeEvent, RefObject } from 'react';
 import { useCallback, useRef, useState } from 'react';
 
+import { lightImpact } from '../native/haptics';
+
 import { captureNativePhoto, fileToPhoto } from './photoCapture';
 import type { CapturedPhoto, PhotoSource } from './photoCapture';
 
@@ -34,6 +36,7 @@ export const usePhotoCapture = ({ onPhoto }: UsePhotoCaptureOptions): UsePhotoCa
     async (photo: CapturedPhoto) => {
       try {
         await onPhoto(photo);
+        lightImpact();
       } catch {
         setError('No se pudo guardar la evidencia.');
       }

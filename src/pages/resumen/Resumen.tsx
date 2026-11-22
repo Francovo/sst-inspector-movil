@@ -1,4 +1,4 @@
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonToast } from '@ionic/react';
 import {
   briefcaseOutline,
   businessOutline,
@@ -11,6 +11,7 @@ import {
   locationOutline,
   personOutline,
   saveOutline,
+  shareSocialOutline,
   timeOutline,
   warning,
 } from 'ionicons/icons';
@@ -21,6 +22,7 @@ import EvidenceGallery from '../../components/EvidenceGallery';
 import PageShell from '../../components/PageShell';
 import { DEMO_INSPECTION } from '../../features/inspection/demoInspection';
 import { useInspectionDraft } from '../../features/inspection/draftContext';
+import { shareSummary } from '../../features/inspection/shareSummary';
 import './Resumen.css';
 
 /**
@@ -31,8 +33,18 @@ import './Resumen.css';
 const Resumen = (): JSX.Element => {
   const { draft, addPhotos } = useInspectionDraft();
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [shareMessage, setShareMessage] = useState<string | null>(null);
   const answeredPercent = Math.round((DEMO_INSPECTION.answered / DEMO_INSPECTION.total) * 100);
   const isSigned = Boolean(draft.signature);
+
+  const handleShare = async () => {
+    try {
+      const outcome = await shareSummary(draft);
+      setShareMessage(outcome === 'copied' ? 'Resumen copiado al portapapeles.' : null);
+    } catch {
+      setShareMessage('No se pudo compartir el resumen.');
+    }
+  };
 
   return (
     <PageShell
@@ -221,7 +233,25 @@ const Resumen = (): JSX.Element => {
             <IonIcon aria-hidden="true" icon={saveOutline} slot="start" />
             Finalizar y guardar
           </IonButton>
+
+          <IonButton
+            className="sst-action sst-action--ghost resumen__share-action"
+            expand="block"
+            fill="outline"
+            onClick={() => void handleShare()}
+          >
+            <IonIcon aria-hidden="true" icon={shareSocialOutline} slot="start" />
+            Compartir resumen
+          </IonButton>
         </div>
+
+        <IonToast
+          duration={2500}
+          isOpen={shareMessage !== null}
+          message={shareMessage ?? ''}
+          onDidDismiss={() => setShareMessage(null)}
+          position="top"
+        />
       </div>
     </PageShell>
   );
