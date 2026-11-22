@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-test('lands on the digital signature screen', async ({ page }) => {
+test('lands on the login screen', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.getByRole('heading', { name: 'SST-Inspector Móvil' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Firma digital' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /ingresar/i })).toBeVisible();
 });
 
 test('continues from the signature to the inspection summary', async ({ page }) => {

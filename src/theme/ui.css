@@ -137,3 +137,130 @@
   outline: none;
   box-shadow: 0 0 0 1px var(--sst-green);
 }
+
+.sst-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--sst-border);
+  border-radius: var(--sst-radius-sm);
+  background: var(--sst-surface-sunken);
+  color: var(--sst-text);
+  font: inherit;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  resize: none;
+}
+
+.sst-textarea::placeholder {
+  color: var(--sst-text-soft);
+}
+
+.sst-textarea:focus {
+  border-color: var(--sst-green);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--sst-green);
+  background: var(--sst-surface);
+}
+
+/* Native action buttons: compact, on-brand and free of Ionic's shadow DOM. */
+.sst-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sst-space-2);
+  min-height: 38px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--sst-radius-md);
+  background: none;
+  color: var(--sst-text);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.sst-button:active {
+  transform: scale(0.99);
+}
+
+.sst-button ion-icon {
+  font-size: 16px;
+}
+
+.sst-button--primary {
+  background: var(--sst-green);
+  color: #fff;
+  box-shadow: var(--sst-shadow-cta);
+}
+
+.sst-button--primary:hover {
+  background: var(--sst-green-dark);
+}
+
+.sst-button--outline {
+  border-color: var(--sst-border-strong);
+  background: var(--sst-surface);
+  color: var(--sst-text);
+}
+
+.sst-button--outline:hover {
+  background: var(--sst-surface-sunken);
+}
+
+.sst-button--block {
+  width: 100%;
+}
+
+/* Contextual notes: offline mode, local storage, data protection. */
+.sst-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--sst-radius-md);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+}
+
+.sst-note > ion-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 16px;
+}
+
+.sst-note p {
+  margin: 0;
+}
+
+.sst-note h3 {
+  margin: 0 0 2px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.sst-note--info {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+.sst-note--info > ion-icon {
+  color: var(--sst-blue);
+}
+
+.sst-note--success {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.sst-note--success > ion-icon {
+  color: var(--sst-green-dark);
+}

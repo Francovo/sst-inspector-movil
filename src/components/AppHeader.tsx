@@ -2,6 +2,7 @@ import { IonIcon } from '@ionic/react';
 import { cloudOfflineOutline, ellipsisVertical, menuOutline } from 'ionicons/icons';
 import type { JSX } from 'react';
 
+import BrandMark from './BrandMark';
 import './AppHeader.css';
 
 type AppHeaderProps = {
@@ -12,22 +13,6 @@ type AppHeaderProps = {
   /** Renders the overflow button. Visual only while the shell is not built. */
   withOverflow?: boolean;
 };
-
-const BrandMark = () => (
-  <svg
-    aria-hidden="true"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2.2}
-    viewBox="0 0 24 24"
-  >
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    <path d="M8 11a4 4 0 0 1 8 0v1H8v-1z" />
-    <path d="M7 13h10" />
-  </svg>
-);
 
 const AppHeader = ({ online = true, withMenu = false, withOverflow = false }: AppHeaderProps): JSX.Element => (
   <header className="sst-header">

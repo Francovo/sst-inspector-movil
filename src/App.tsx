@@ -5,6 +5,7 @@ import { Navigate, Route } from 'react-router-dom';
 
 import { InspectionDraftProvider } from './features/inspection/InspectionDraftProvider';
 import Firma from './pages/firma/Firma';
+import Login from './pages/login/Login';
 import Resumen from './pages/resumen/Resumen';
 
 /* Core CSS required for Ionic components to work properly */
@@ -36,10 +37,11 @@ const App = (): JSX.Element => (
     <InspectionDraftProvider>
       <IonReactRouter>
         <IonRouterOutlet>
+          <Route path="/login" element={<Login />} />
           <Route path="/firma" element={<Firma />} />
           <Route path="/resumen" element={<Resumen />} />
-          <Route path="/" element={<Navigate to="/firma" replace />} />
-          <Route path="*" element={<Navigate to="/firma" replace />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </InspectionDraftProvider>
