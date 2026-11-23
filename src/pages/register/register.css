@@ -1,0 +1,303 @@
+
+.register-content {
+  --background: #FFFFFF;
+}
+
+.register-page {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  color: #0F2A44;
+}
+
+/* HEADER */
+
+.register-topbar {
+  min-height: 76px;
+  padding: 12px 16px;
+  background: #0F2A44;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  border-radius: 0 0 22px 22px;
+}
+
+.register-back {
+  color: white;
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+}
+
+.register-brand {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 3px;
+}
+
+.register-brand strong {
+  font-size: 14px;
+}
+
+.register-brand span {
+  font-size: 9px;
+  color: #D7E2ED;
+}
+
+.register-brand-logo {
+  width: 40px;
+  height: 40px;
+  background: #16A34A;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+/* CONTENIDO */
+
+.register-container {
+  width: 100%;
+  max-width: 460px;
+  padding: 15px 18px 10px;
+  margin: 0 auto;
+}
+
+/* INTRODUCCION */
+
+.register-intro {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.register-intro h1 {
+  font-size: 21px;
+  font-weight: 800;
+  margin: 0 0 5px;
+  color: #101820;
+}
+
+.register-intro p {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #475569;
+  margin: 0 auto;
+  max-width: 310px;
+}
+
+/* FORMULARIO */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.register-field {
+  min-height: 43px;
+  border: 1px solid #C9D4DE;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  padding: 4px 9px;
+  gap: 9px;
+  background: #FFFFFF;
+}
+
+.register-field > ion-icon {
+  font-size: 21px;
+  color: #263D50;
+  flex-shrink: 0;
+}
+
+.register-input {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-input label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #172B3D;
+  margin-bottom: 1px;
+}
+
+.register-input ion-input,
+.register-input ion-select {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --color: #475569;
+  font-size: 10px;
+  min-height: 19px;
+}
+
+.register-input ion-select {
+  width: 100%;
+  max-width: 100%;
+}
+
+.password-toggle {
+  --color: #526575;
+  --padding-start: 3px;
+  --padding-end: 3px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  margin: 0;
+  height: 30px;
+  font-size: 17px;
+}
+
+/* TERMINOS */
+
+.register-terms {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 2px 0;
+  font-size: 9px;
+  color: #334155;
+}
+
+.register-terms ion-checkbox {
+  --size: 15px;
+  --border-radius: 3px;
+  --border-color: #16A34A;
+  --checkbox-background-checked: #16A34A;
+  --border-color-checked: #16A34A;
+  flex-shrink: 0;
+}
+
+.register-terms a {
+  color: #168A43;
+  text-decoration: underline;
+}
+
+/* BOTONES */
+
+.register-submit {
+  --background: #22C55E;
+  --background-activated: #16A34A;
+  --border-radius: 9px;
+  --box-shadow: none;
+  height: 42px;
+  margin: 1px 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.register-login {
+  --color: #263D50;
+  --border-color: #A9BAC7;
+  --border-radius: 9px;
+  --border-width: 1px;
+  --background: #F8FAFC;
+  height: 39px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* SEGURIDAD */
+
+.register-security {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: #F0F5F8;
+  border-radius: 10px;
+  padding: 11px;
+  margin-top: 12px;
+}
+
+.register-security > ion-icon {
+  color: #16A34A;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.register-security strong {
+  font-size: 10px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.register-security p {
+  font-size: 9px;
+  line-height: 1.4;
+  color: #526575;
+  margin: 0;
+}
+
+/* FOOTER */
+
+.register-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 20px 16px;
+  margin-top: auto;
+}
+
+.register-footer > ion-icon {
+  font-size: 27px;
+  color: #16A34A;
+}
+
+.register-footer div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+}
+
+.register-footer strong {
+  font-size: 10px;
+  color: #0F2A44;
+}
+
+.register-footer span {
+  font-size: 8px;
+  color: #64748B;
+}
+
+.register-footer small {
+  font-size: 8px;
+  color: #64748B;
+}
+
+/* PANTALLAS PEQUEÑAS */
+
+@media (max-width: 360px) {
+  .register-container {
+    padding: 12px 14px 8px;
+  }
+
+  .register-topbar {
+    min-height: 68px;
+  }
+
+  .register-intro h1 {
+    font-size: 19px;
+  }
+
+  .register-field {
+    min-height: 41px;
+  }
+
+  .register-form {
+    gap: 6px;
+  }
+}
