@@ -4,6 +4,9 @@ import { Navigate, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 
+import Evidencias from './pages/Evidencias';
+import Sincronizacion from './pages/Sincronizacion';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -38,13 +41,16 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Navigate to="/home" replace />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+	<IonReactRouter>
+		<IonRouterOutlet>
+			<Route path="/home" element={<Home/>}/>
+			<Route path="/evidencias" element={<Evidencias/>}/>
+			<Route path="/sincronizacion" element={<Sincronizacion/>}/>
+			<Route path="/" element={<Navigate to="/home" replace/>}
+/>
+</IonRouterOutlet>
+	</IonReactRouter>
+</IonApp>
 );
 
 export default App;

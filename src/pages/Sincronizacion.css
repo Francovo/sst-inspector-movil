@@ -1,0 +1,111 @@
+.sync-toolbar {
+  --background: #0F2A44;
+  --color: #FFFFFF;
+}
+
+.sync-content {
+  --background: #F3F6FA;
+}
+
+.sync-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.conexion-card {
+  margin: 0 0 20px 0;
+  border-radius: 12px;
+}
+
+.conexion-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.conexion-content p {
+  margin: 4px 0 0;
+  color: #64748B;
+}
+
+.conexion-icon {
+  color: #16A34A;
+  font-size: 42px;
+}
+
+.resumen-estados {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.resumen-card {
+  margin: 0;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.resumen-card ion-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.resumen-card strong {
+  font-size: 28px;
+}
+
+.resumen-card span {
+  font-size: 13px;
+}
+
+.resumen-card.pendiente strong {
+  color: #F59E0B;
+}
+
+.resumen-card.sincronizada strong {
+  color: #16A34A;
+}
+
+.resumen-card.borrador strong {
+  color: #64748B;
+}
+
+.boton-sincronizar {
+  --background: #22C55E;
+  --color: #FFFFFF;
+
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.titulo-inspecciones {
+  color: #0F2A44;
+  font-size: 20px;
+  margin-top: 28px;
+}
+
+.lista-inspecciones {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sin-registros {
+  margin: 0;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.sin-registros-icon {
+  font-size: 45px;
+  color: #64748B;
+}
+
+@media (max-width: 480px) {
+
+  .resumen-estados {
+    grid-template-columns: 1fr;
+  }
+
+}
