@@ -3,9 +3,10 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Navigate, Route } from 'react-router';
 
 /*IMPORT DE COMPONENTES <-- <-- !!!!!!!!!!*/
-import Dashboard from './pages/dashboard/Dashboard';
-import Login from './pages/login/Login';
-import Register from './pages/register/Register';
+import Dashboard from './pages/dashboard/dashboard';
+import Inspeccion from './pages/inspeccion/Inspeccion';
+import Login from './pages/login/login';
+import Register from './pages/register/register';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,6 +43,7 @@ const App: React.FC = () => (
         />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/inspeccion" element={<Inspeccion />} />
         <Route
           path="/"
           element={<Navigate to="/login" replace />}
