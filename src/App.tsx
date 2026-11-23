@@ -8,9 +8,9 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Navigate, Route } from 'react-router';
 
 import Dashboard from './pages/dashboard/dashboard';
+import Inspeccion from './pages/inspeccion/Inspeccion';
 import Login from './pages/login/login';
 import Register from './pages/register/register';
-
 import Evidencias from './pages/Evidencias';
 import Sincronizacion from './pages/Sincronizacion';
 
@@ -40,19 +40,18 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-	<IonReactRouter>
-		<IonRouterOutlet>
-			<Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
-        <Route path="/evidencias" element={<Evidencias/>} />
-        <Route path="/sincronizacion" element={<Sincronizacion/>}
-        />
-        <Route path="/" element={<Navigate to="/login" replace/>}
-        />
+    <IonReactRouter>
+      <IonRouterOutlet>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/evidencias" element={<Evidencias />} />
+        <Route path="/sincronizacion" element={<Sincronizacion />} />
+        <Route path="/inspeccion" element={<Inspeccion />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
       </IonRouterOutlet>
-	</IonReactRouter>
-</IonApp>
+    </IonReactRouter>
+  </IonApp>
 );
 
 export default App;
