@@ -1,4 +1,4 @@
-import { InspeccionSST, ListaChequeo } from '../models/sst.models';
+import type { InspeccionSST, ListaChequeo } from '../models/sst.models';
 
 const STORAGE_KEY = 'sst_inspecciones_locales';
 

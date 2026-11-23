@@ -1,0 +1,425 @@
+
+/* ========================================
+   PALETA DE COLORES
+======================================== */
+
+.login-content {
+  --background: #f3f6fa;
+}
+
+.login-container {
+  --primary: #0f2a44;
+  --secondary: #22c55e;
+  --success: #16a34a;
+  --text: #1e293b;
+  --muted: #64748b;
+
+  width: 100%;
+  max-width: 480px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 0 20px 14px;
+  background: #f3f6fa;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   ENCABEZADO
+======================================== */
+
+.login-header {
+  position: relative;
+  background: var(--primary);
+  color: white;
+  margin: 0 -20px;
+  padding: 35px 22px 75px;
+  overflow: hidden;
+  border-radius: 0 0 32px 32px;
+}
+
+.login-header::before {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  right: -100px;
+  top: -130px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-logo {
+  width: 68px;
+  height: 68px;
+  min-width: 68px;
+  border-radius: 20px;
+  background: var(--success);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-logo ion-icon {
+  font-size: 42px;
+  color: white;
+}
+
+.login-brand-text h1 {
+  font-size: 21px;
+  font-weight: 800;
+  margin: 0 0 5px;
+  color: white;
+}
+
+.login-brand-text p {
+  margin: 2px 0;
+  font-size: 12px;
+  color: #dbeafe;
+}
+
+.login-header-decoration {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  font-size: 8px;
+  letter-spacing: 1px;
+  opacity: 0.65;
+}
+
+/* ========================================
+   TARJETA DE LOGIN
+======================================== */
+
+.login-card {
+  position: relative;
+  z-index: 2;
+  margin-top: -48px;
+  background: white;
+  padding: 25px 19px 20px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(15, 42, 68, 0.08);
+}
+
+.login-introduction {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.login-introduction h2 {
+  color: var(--primary);
+  font-size: 25px;
+  font-weight: 800;
+  margin: 0 0 7px;
+}
+
+.login-introduction p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========================================
+   CAMPOS
+======================================== */
+
+.login-field {
+  min-height: 58px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.login-field:focus-within {
+  border-color: var(--success);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.12);
+}
+
+.login-field > ion-icon {
+  font-size: 22px;
+  color: var(--primary);
+}
+
+.login-input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+}
+
+.login-input-wrapper label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.login-input-wrapper input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  width: 100%;
+  font-size: 12px;
+  padding: 0;
+}
+
+.login-input-wrapper input::placeholder {
+  color: #94a3b8;
+}
+
+.password-toggle {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 21px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* ========================================
+   OPCIONES
+======================================== */
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin: 7px 0 19px;
+}
+
+.remember-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.remember-option input {
+  accent-color: var(--success);
+  width: 16px;
+  height: 16px;
+}
+
+.forgot-password {
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-size: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ========================================
+   BOTONES
+======================================== */
+
+.login-button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 9px;
+  background: var(--success);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.login-button ion-icon {
+  font-size: 22px;
+}
+
+.login-button:active {
+  background: #15803d;
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 19px 0;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: #e2e8f0;
+}
+
+.register-button {
+  width: 100%;
+  height: 45px;
+  border: 1px solid var(--primary);
+  border-radius: 9px;
+  background: white;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+
+.register-button ion-icon {
+  font-size: 19px;
+}
+
+/* ========================================
+   MODO SIN CONEXIÓN
+======================================== */
+
+.offline-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+  padding: 15px 12px;
+  border-radius: 12px;
+  background: #eff6ff;
+}
+
+.offline-icon {
+  min-width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offline-icon ion-icon {
+  color: var(--success);
+  font-size: 29px;
+}
+
+.offline-card h3 {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  margin: 0 0 5px;
+}
+
+.offline-card p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.login-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: auto;
+  padding: 22px 0 10px;
+  border-top: 1px solid #e2e8f0;
+  gap: 8px;
+}
+
+.footer-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  color: var(--primary);
+  font-size: 10px;
+}
+
+.footer-item ion-icon {
+  font-size: 25px;
+  color: var(--primary);
+}
+
+.footer-item small {
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.login-version {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 9px;
+  padding-bottom: 3px;
+}
+
+/* ========================================
+   PANTALLAS PEQUEÑAS
+======================================== */
+
+@media (max-width: 360px) {
+  .login-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .login-header {
+    margin-left: -14px;
+    margin-right: -14px;
+  }
+
+  .login-card {
+    padding: 21px 14px;
+  }
+
+  .login-brand-text h1 {
+    font-size: 18px;
+  }
+
+  .login-options {
+    flex-wrap: wrap;
+  }
+}
+
+/* ========================================
+   PANTALLAS ALTAS
+======================================== */
+
+@media (min-height: 800px) {
+  .login-header {
+    padding-top: 45px;
+    padding-bottom: 85px;
+  }
+
+  .login-card {
+    padding-top: 30px;
+    padding-bottom: 25px;
+  }
+}
