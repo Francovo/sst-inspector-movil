@@ -7,7 +7,8 @@ import { NetworkStatusProvider } from './features/network/NetworkStatusProvider'
 import Evidencias from './pages/Evidencias';
 import Sincronizacion from './pages/Sincronizacion';
 import Dashboard from './pages/dashboard/dashboard';
-import Inspeccion from './pages/inspeccion/Inspeccion';
+import Firma from './pages/firma/Firma';
+import Formulario from './pages/formulario/Formulario';
 import Listas from './pages/listas/Listas';
 import Login from './pages/login/login';
 import Register from './pages/register/register';
@@ -45,7 +46,8 @@ const App = (): JSX.Element => (
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/listas" element={<Listas />} />
-          <Route path="/inspeccion" element={<Inspeccion />} />
+          <Route path="/inspeccion" element={<Formulario />} />
+          <Route path="/firma" element={<Firma />} />
           <Route path="/evidencias" element={<Evidencias />} />
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/sincronizacion" element={<Sincronizacion />} />

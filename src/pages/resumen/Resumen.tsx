@@ -18,6 +18,7 @@ import {
 } from 'ionicons/icons';
 import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import PageShell from '../../components/PageShell';
 import { shareInspection } from '../../features/inspection/shareInspection';
@@ -49,6 +50,7 @@ const STATUS_LABELS: Record<InspeccionSST['estado'], string> = {
  * inspection editor and the synchronization screen already handle.
  */
 const Resumen = (): JSX.Element => {
+  const navigate = useNavigate();
   const [inspeccion, setInspeccion] = useState<InspeccionSST | null>(null);
   const [loading, setLoading] = useState(true);
   const [shareMessage, setShareMessage] = useState<string | null>(null);
@@ -299,7 +301,12 @@ const Resumen = (): JSX.Element => {
         </section>
 
         <div className="resumen__actions">
-          <IonButton className="sst-action sst-action--ghost" expand="block" fill="outline" routerLink="/inspeccion">
+          <IonButton
+            className="sst-action sst-action--ghost"
+            expand="block"
+            fill="outline"
+            onClick={() => navigate('/inspeccion', { state: { inspectionId: inspeccion.id } })}
+          >
             <IonIcon aria-hidden="true" icon={createOutline} slot="start" />
             Editar inspección
           </IonButton>
@@ -309,10 +316,23 @@ const Resumen = (): JSX.Element => {
             Sincronizar
           </IonButton>
 
+          {!isSigned && (
+            <IonButton
+              className="sst-action sst-action--cta resumen__share-action"
+              color="success"
+              expand="block"
+              onClick={() => navigate('/firma', { state: { inspectionId: inspeccion.id } })}
+            >
+              <IonIcon aria-hidden="true" icon={createOutline} slot="start" />
+              Firmar inspección
+            </IonButton>
+          )}
+
           <IonButton
-            className="sst-action sst-action--cta resumen__share-action"
-            color="success"
+            className={`sst-action ${isSigned ? 'sst-action--cta' : 'sst-action--ghost'} resumen__share-action`}
+            color={isSigned ? 'success' : undefined}
             expand="block"
+            fill={isSigned ? 'solid' : 'outline'}
             onClick={() => void handleShare()}
           >
             <IonIcon aria-hidden="true" icon={shareSocialOutline} slot="start" />

@@ -76,10 +76,31 @@ const seedUser = async (page: Page, withSession = false): Promise<void> => {
   );
 };
 
+const DEMO_DRAFT = {
+  ...DEMO_INSPECTION,
+  id: 'insp-draft',
+  codigoReporte: 'SST-2026-002',
+  estado: 'borrador',
+  firma: undefined,
+  items: DEMO_INSPECTION.items.map((item) => ({
+    ...item,
+    respuesta: null,
+    observacion: '',
+  })),
+  porcentajeCumplimiento: 0,
+  hallazgosCriticos: 0,
+};
+
 const seedInspection = async (page: Page): Promise<void> => {
   await page.addInitScript((inspection) => {
     localStorage.setItem('sst_inspecciones_locales', JSON.stringify([inspection]));
   }, DEMO_INSPECTION);
+};
+
+const seedDraft = async (page: Page): Promise<void> => {
+  await page.addInitScript((inspection) => {
+    localStorage.setItem('sst_inspecciones_locales', JSON.stringify([inspection]));
+  }, DEMO_DRAFT);
 };
 
 test('lands on the login screen', async ({ page }) => {
@@ -112,7 +133,7 @@ test('signs in and reaches the dashboard', async ({ page }) => {
   await expect(page.getByText('Resumen de inspecciones')).toBeVisible();
 });
 
-test('goes from the dashboard to a checklist and main inspection editor', async ({ page }) => {
+test('fills the guided inspection form question by question', async ({ page }) => {
   await seedUser(page, true);
   await page.goto('/dashboard');
 
@@ -121,9 +142,15 @@ test('goes from the dashboard to a checklist and main inspection editor', async 
 
   await page.getByRole('button', { name: 'Seleccionar' }).first().click();
 
-  await expect(page.getByText('Inspección SST').first()).toBeVisible();
-  await expect(page.getByText('Decreto 1072').first()).toBeVisible();
-  await expect(page.locator('.sst-signature__canvas')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Formulario de inspección' })).toBeVisible();
+  await expect(page.getByText('Pregunta 1 de 10')).toBeVisible();
+  await expect(page.getByText('10% completado')).toBeVisible();
+
+  await page.getByRole('button', { name: 'Cumple' }).click();
+  await page.getByRole('button', { name: /siguiente/i }).click();
+
+  await expect(page.getByText('Pregunta 2 de 10')).toBeVisible();
+  await expect(page.getByText('20% completado')).toBeVisible();
 });
 
 test('opens the shared side menu and returns to the dashboard', async ({ page }) => {
@@ -175,6 +202,31 @@ test('shows the saved inspection in the summary', async ({ page }) => {
   await expect(page.getByText('Firma registrada correctamente')).toBeVisible();
   await expect(page.getByText('67%')).toBeVisible();
   await expect(page.getByText('1 No conformidad')).toBeVisible();
+});
+
+test('signs a draft and reaches the summary', async ({ page }) => {
+  await seedDraft(page);
+  await page.goto('/firma');
+
+  await expect(page.getByRole('heading', { name: 'Firma digital' })).toBeVisible();
+
+  const canvas = page.locator('.sst-signature__canvas');
+  await canvas.scrollIntoViewIfNeeded();
+  const box = await canvas.boundingBox();
+  if (!box) throw new Error('No se encontró el área de firma');
+
+  await page.mouse.move(box.x + 24, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width - 24, box.y + box.height / 2, { steps: 12 });
+  await page.mouse.up();
+
+  await page.getByRole('button', { name: /guardar firma/i }).click();
+  await expect(page.getByText('Firma capturada correctamente.')).toBeVisible();
+
+  await page.getByRole('button', { name: /continuar al resumen/i }).click();
+
+  await expect(page.getByRole('heading', { name: 'Resumen de inspección' })).toBeVisible();
+  await expect(page.getByText('Firma registrada correctamente')).toBeVisible();
 });
 
 test('lists and synchronizes a pending inspection', async ({ page }) => {

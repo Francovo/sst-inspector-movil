@@ -46,7 +46,7 @@ const MENU_ITEMS: readonly MenuItem[] = [
     label: 'Inspecciones',
     icon: clipboardOutline,
     to: '/listas',
-    activePaths: ['/listas', '/inspeccion'],
+    activePaths: ['/listas', '/inspeccion', '/firma'],
   },
   {
     id: 'evidencias',
