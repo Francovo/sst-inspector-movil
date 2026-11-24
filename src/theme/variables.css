@@ -1,2 +1,86 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/*
+ * SST-Inspector Móvil — design tokens.
+ *
+ * Palette, spacing and shape come from the Stitch project "SST inspector"
+ * (screens "Resumen de Inspección" and "Firma Digital"). This file is the
+ * single source of truth: components read the `--sst-*` tokens and Ionic
+ * components read the mapped `--ion-*` ones.
+ */
+
+:root {
+  /* ---- Brand ---------------------------------------------------------- */
+  --sst-navy: #0f2a44;
+  --sst-green: #22c55e;
+  --sst-green-dark: #16a34a;
+  --sst-amber: #f59e0b;
+  --sst-red: #ef4444;
+  --sst-blue: #3b82f6;
+
+  /* ---- Neutrals ------------------------------------------------------- */
+  --sst-background: #f3f6fa;
+  --sst-surface: #ffffff;
+  --sst-surface-sunken: #f8fafc;
+  --sst-border: #e2e8f0;
+  --sst-border-strong: #cbd5e1;
+  --sst-text: #1e293b;
+  --sst-text-muted: #64748b;
+  --sst-text-soft: #94a3b8;
+
+  /* ---- Shape ---------------------------------------------------------- */
+  --sst-radius-sm: 8px;
+  --sst-radius-md: 12px;
+  --sst-radius-lg: 16px;
+  --sst-shadow-card: 0 1px 2px rgb(15 42 68 / 6%);
+  --sst-shadow-cta: 0 4px 12px rgb(34 197 94 / 25%);
+
+  /* ---- Spacing -------------------------------------------------------- */
+  --sst-space-1: 4px;
+  --sst-space-2: 8px;
+  --sst-space-3: 12px;
+  --sst-space-4: 16px;
+  --sst-space-5: 20px;
+
+  /* ---- Typography ----------------------------------------------------- */
+  --ion-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* ---- Ionic mapping -------------------------------------------------- */
+  --ion-background-color: var(--sst-background);
+  --ion-background-color-rgb: 243, 246, 250;
+  --ion-text-color: var(--sst-text);
+  --ion-text-color-rgb: 30, 41, 59;
+
+  --ion-color-primary: #0f2a44;
+  --ion-color-primary-rgb: 15, 42, 68;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #0d253c;
+  --ion-color-primary-tint: #274059;
+
+  --ion-color-success: #22c55e;
+  --ion-color-success-rgb: 34, 197, 94;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #1ead53;
+  --ion-color-success-tint: #38cb6e;
+
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #1e293b;
+  --ion-color-warning-contrast-rgb: 30, 41, 59;
+  --ion-color-warning-shade: #d88b0a;
+  --ion-color-warning-tint: #f6a823;
+
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d23c3c;
+  --ion-color-danger-tint: #f15757;
+
+  --ion-color-medium: #64748b;
+  --ion-color-medium-rgb: 100, 116, 139;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #58687a;
+  --ion-color-medium-tint: #74829b;
+}

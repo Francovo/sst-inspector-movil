@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {
+
+import type {
   EstadoRespuesta,
   EvidenciaFotografica,
   FirmaResponsable,
@@ -8,7 +9,21 @@ import {
 } from '../models/sst.models';
 import { StorageService } from '../services/storage.service';
 
-export function useInspeccionFlow(inspeccionInicial: InspeccionSST) {
+type InspeccionFlow = {
+  inspeccion: InspeccionSST;
+  itemActual: ItemChequeo | undefined;
+  indiceActual: number;
+  totalPreguntas: number;
+  irSiguiente: () => void;
+  irAnterior: () => void;
+  responderItem: (respuesta: EstadoRespuesta, observacion?: string) => void;
+  agregarEvidencia: (evidencia: EvidenciaFotografica) => void;
+  registrarFirma: (firma: FirmaResponsable) => void;
+  guardarBorrador: () => Promise<void>;
+  finalizarYGuardar: () => Promise<InspeccionSST>;
+};
+
+export function useInspeccionFlow(inspeccionInicial: InspeccionSST): InspeccionFlow {
   const [inspeccion, setInspeccion] = useState<InspeccionSST>(inspeccionInicial);
   const [indiceActual, setIndiceActual] = useState<number>(0);
 
@@ -16,9 +31,7 @@ export function useInspeccionFlow(inspeccionInicial: InspeccionSST) {
 
   const responderItem = (respuesta: EstadoRespuesta, observacion?: string) => {
     const itemsActualizados = inspeccion.items.map((item, idx) =>
-      idx === indiceActual
-        ? { ...item, respuesta, observacion: observacion ?? item.observacion }
-        : item
+      idx === indiceActual ? { ...item, respuesta, observacion: observacion ?? item.observacion } : item,
     );
     setInspeccion({ ...inspeccion, items: itemsActualizados });
   };

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import {
   IonBadge,
   IonButton,
@@ -17,14 +15,10 @@ import {
   IonToast,
   IonToolbar,
 } from '@ionic/react';
+import { cloudDoneOutline, cloudOfflineOutline, refreshOutline } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
 
-import {
-  cloudDoneOutline,
-  cloudOfflineOutline,
-  refreshOutline,
-} from 'ionicons/icons';
-
-import { InspeccionSST } from '../models/sst.models';
+import type { InspeccionSST } from '../models/sst.models';
 import { StorageService } from '../services/storage.service';
 
 import './Sincronizacion.css';
@@ -34,26 +28,25 @@ const Sincronizacion: React.FC = () => {
   const [sincronizando, setSincronizando] = useState(false);
   const [mensaje, setMensaje] = useState('');
 
-  const cargarInspecciones = async () => {
-    const datos = await StorageService.obtenerInspecciones();
-    setInspecciones(datos);
-  };
-
   useEffect(() => {
-    cargarInspecciones();
+    let active = true;
+
+    StorageService.obtenerInspecciones()
+      .then((datos) => {
+        if (active) setInspecciones(datos);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const pendientes = inspecciones.filter(
-    (inspeccion) => inspeccion.estado === 'pendiente_sincronizar',
-  ).length;
+  const pendientes = inspecciones.filter((inspeccion) => inspeccion.estado === 'pendiente_sincronizar').length;
 
-  const sincronizadas = inspecciones.filter(
-    (inspeccion) => inspeccion.estado === 'sincronizada',
-  ).length;
+  const sincronizadas = inspecciones.filter((inspeccion) => inspeccion.estado === 'sincronizada').length;
 
-  const borradores = inspecciones.filter(
-    (inspeccion) => inspeccion.estado === 'borrador',
-  ).length;
+  const borradores = inspecciones.filter((inspeccion) => inspeccion.estado === 'borrador').length;
 
   const sincronizar = async () => {
     if (pendientes === 0) {
@@ -122,10 +115,7 @@ const Sincronizacion: React.FC = () => {
         <div className="sync-container">
           <IonCard className="conexion-card">
             <IonCardContent className="conexion-content">
-              <IonIcon
-                icon={cloudDoneOutline}
-                className="conexion-icon"
-              />
+              <IonIcon icon={cloudDoneOutline} className="conexion-icon" />
 
               <div>
                 <strong>Con conexión</strong>
@@ -157,12 +147,7 @@ const Sincronizacion: React.FC = () => {
             </IonCard>
           </div>
 
-          <IonButton
-            expand="block"
-            className="boton-sincronizar"
-            disabled={sincronizando}
-            onClick={sincronizar}
-          >
+          <IonButton expand="block" className="boton-sincronizar" disabled={sincronizando} onClick={sincronizar}>
             {sincronizando ? (
               <>
                 <IonSpinner name="crescent" />
@@ -170,10 +155,7 @@ const Sincronizacion: React.FC = () => {
               </>
             ) : (
               <>
-                <IonIcon
-                  slot="start"
-                  icon={refreshOutline}
-                />
+                <IonIcon slot="start" icon={refreshOutline} />
                 Sincronizar ahora
               </>
             )}
@@ -184,10 +166,7 @@ const Sincronizacion: React.FC = () => {
           {inspecciones.length === 0 ? (
             <IonCard className="sin-registros">
               <IonCardContent>
-                <IonIcon
-                  icon={cloudOfflineOutline}
-                  className="sin-registros-icon"
-                />
+                <IonIcon icon={cloudOfflineOutline} className="sin-registros-icon" />
 
                 <p>No hay inspecciones guardadas.</p>
               </IonCardContent>
@@ -204,10 +183,7 @@ const Sincronizacion: React.FC = () => {
                     <p>{inspeccion.sedeArea}</p>
                   </IonLabel>
 
-                  <IonBadge
-                    slot="end"
-                    color={obtenerColorEstado(inspeccion.estado)}
-                  >
+                  <IonBadge slot="end" color={obtenerColorEstado(inspeccion.estado)}>
                     {obtenerTextoEstado(inspeccion.estado)}
                   </IonBadge>
                 </IonItem>

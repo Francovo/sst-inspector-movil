@@ -443,42 +443,6 @@
   margin: 0;
 }
 
-/* NAVEGACION */
-
-.dashboard-tabbar {
-  min-height: 57px;
-  background: white;
-  border-top: 1px solid #DCE5ED;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 5px 3px;
-  padding-bottom: max(5px, env(safe-area-inset-bottom));
-}
-
-.tab-item {
-  border: none;
-  background: transparent;
-  color: #526575;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-}
-
-.tab-item ion-icon {
-  font-size: 21px;
-}
-
-.tab-item span {
-  font-size: 8px;
-}
-
-.tab-active {
-  color: #16A34A;
-  font-weight: 700;
-}
-
 /* PANTALLAS PEQUEÑAS */
 
 @media (max-width: 360px) {

@@ -1,4 +1,4 @@
-.dashboard-side-menu {
+.side-menu-content {
   --background: #ffffff;
   --color: #0f2a44;
 }
@@ -73,6 +73,12 @@
 
 .side-menu-item:hover {
   --background: #f0faf5;
+}
+
+.side-menu-item--active {
+  --background: #f0faf5;
+  --color: #168a43;
+  font-weight: 700;
 }
 
 .side-menu-item ion-icon {

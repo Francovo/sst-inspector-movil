@@ -1,82 +1,37 @@
-import { useState } from 'react';
-
 import {
   IonButton,
   IonCard,
   IonCardContent,
   IonContent,
   IonHeader,
+  IonIcon,
   IonImg,
   IonPage,
   IonTextarea,
   IonTitle,
   IonToast,
-  IonToolbar, 
-  IonIcon
+  IonToolbar,
 } from '@ionic/react';
+import { cameraOutline, imagesOutline, saveOutline } from 'ionicons/icons';
+import { useState } from 'react';
 
-import {
-  cameraOutline,
-  imagesOutline,
-  saveOutline
-} from 'ionicons/icons';
-
-import {
-  Camera,
-  CameraResultType,
-  CameraSource
-} from '@capacitor/camera';
-
-import { EvidenciaFotografica } from '../models/sst.models';
+import ErrorToast from '../components/ErrorToast';
+import PhotoFileInput from '../features/media/PhotoFileInput';
+import { usePhotoCapture } from '../features/media/usePhotoCapture';
+import type { EvidenciaFotografica } from '../models/sst.models';
 
 import './Evidencias.css';
 
 const Evidencias: React.FC = () => {
-
   const [imagen, setImagen] = useState<string>('');
   const [descripcion, setDescripcion] = useState<string>('');
   const [mensaje, setMensaje] = useState<string>('');
 
-  const tomarFoto = async () => {
-    try {
-      const foto = await Camera.getPhoto({
-        quality: 70,
-        allowEditing: false,
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Camera
-      });
-
-      if (foto.webPath) {
-        setImagen(foto.webPath);
-      }
-
-    } catch (error) {
-      console.error('Error al tomar fotografía:', error);
-      setMensaje('No se pudo tomar la fotografía');
-    }
-  };
-
-  const seleccionarGaleria = async () => {
-    try {
-      const foto = await Camera.getPhoto({
-        quality: 70,
-        allowEditing: false,
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Photos
-      });
-
-      if (foto.webPath) {
-        setImagen(foto.webPath);
-      }
-
-    } catch (error) {
-      console.error('Error al seleccionar imagen:', error);
-      setMensaje('No se pudo seleccionar la imagen');
-    }
-  };
+  const { capture, inputRef, handleFileChange, error, clearError } = usePhotoCapture({
+    onPhoto: (foto) => setImagen(foto.dataUrl),
+  });
 
   const guardarEvidencia = () => {
-
     if (!imagen) {
       setMensaje('Debes tomar o seleccionar una fotografía');
       return;
@@ -92,7 +47,7 @@ const Evidencias: React.FC = () => {
       itemId: 'item-temporal',
       imagenBase64OPath: imagen,
       descripcionHallazgo: descripcion.trim(),
-      fechaCaptura: new Date().toISOString()
+      fechaCaptura: new Date().toISOString(),
     };
 
     console.log('Evidencia creada:', evidencia);
@@ -105,7 +60,6 @@ const Evidencias: React.FC = () => {
 
   return (
     <IonPage>
-
       <IonHeader>
         <IonToolbar className="evidencias-toolbar">
           <IonTitle>Captura de evidencias</IonTitle>
@@ -113,80 +67,36 @@ const Evidencias: React.FC = () => {
       </IonHeader>
 
       <IonContent className="evidencias-content">
-
         <div className="evidencias-container">
-
           <h2>Evidencia fotográfica</h2>
 
-          <p className="evidencias-subtitulo">
-            Registra una fotografía del hallazgo encontrado
-            durante la inspección.
-          </p>
+          <p className="evidencias-subtitulo">Registra una fotografía del hallazgo encontrado durante la inspección.</p>
 
           <IonCard className="evidencias-card">
-
             <IonCardContent>
-
               {imagen ? (
-
-                <IonImg
-                  src={imagen}
-                  className="evidencias-imagen"
-                  alt="Vista previa de la evidencia"
-                />
-
+                <IonImg src={imagen} className="evidencias-imagen" alt="Vista previa de la evidencia" />
               ) : (
-
                 <div className="evidencias-placeholder">
-
-                  <IonIcon
-                    icon={cameraOutline}
-                    className="evidencias-placeholder-icon"
-                  />
+                  <IonIcon icon={cameraOutline} className="evidencias-placeholder-icon" />
 
                   <p>No hay fotografía seleccionada</p>
-
                 </div>
-
               )}
-
             </IonCardContent>
-
           </IonCard>
 
-          <IonButton
-            expand="block"
-            className="boton-camara"
-            onClick={tomarFoto}
-          >
-
-            <IonIcon
-              slot="start"
-              icon={cameraOutline}
-            />
-
+          <IonButton expand="block" className="boton-camara" onClick={() => void capture('camera')}>
+            <IonIcon slot="start" icon={cameraOutline} />
             Tomar fotografía
-
           </IonButton>
 
-          <IonButton
-            expand="block"
-            fill="outline"
-            className="boton-galeria"
-            onClick={seleccionarGaleria}
-          >
-
-            <IonIcon
-              slot="start"
-              icon={imagesOutline}
-            />
-
+          <IonButton expand="block" fill="outline" className="boton-galeria" onClick={() => void capture('gallery')}>
+            <IonIcon slot="start" icon={imagesOutline} />
             Seleccionar de galería
-
           </IonButton>
 
           <div className="descripcion-container">
-
             <h3>Descripción del hallazgo</h3>
 
             <IonTextarea
@@ -195,29 +105,18 @@ const Evidencias: React.FC = () => {
               value={descripcion}
               maxlength={500}
               autoGrow={true}
-              onIonInput={(event) =>
-                setDescripcion(event.detail.value ?? '')
-              }
+              onIonInput={(event) => setDescripcion(event.detail.value ?? '')}
             />
-
           </div>
 
-          <IonButton
-            expand="block"
-            className="boton-guardar"
-            onClick={guardarEvidencia}
-          >
-
-            <IonIcon
-              slot="start"
-              icon={saveOutline}
-            />
-
+          <IonButton expand="block" className="boton-guardar" onClick={guardarEvidencia}>
+            <IonIcon slot="start" icon={saveOutline} />
             Guardar evidencia
-
           </IonButton>
-
         </div>
+
+        <PhotoFileInput inputRef={inputRef} onChange={handleFileChange} />
+        <ErrorToast message={error} onDismiss={clearError} />
 
         <IonToast
           isOpen={mensaje !== ''}
@@ -226,9 +125,7 @@ const Evidencias: React.FC = () => {
           position="bottom"
           onDidDismiss={() => setMensaje('')}
         />
-
       </IonContent>
-
     </IonPage>
   );
 };

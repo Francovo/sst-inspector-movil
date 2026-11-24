@@ -26,7 +26,7 @@ import {
 } from 'ionicons/icons';
 import { useState } from 'react';
 
-import './Register.css';
+import './register.css';
 import { registerUser } from '../../services/auth.service';
 
 const Register: React.FC = () => {
