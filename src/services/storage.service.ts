@@ -60,9 +60,7 @@ export class StorageService {
   }
 
   static calcularCumplimiento(inspeccion: InspeccionSST): number {
-    const evaluables = inspeccion.items.filter(
-      (i) => i.respuesta === 'cumple' || i.respuesta === 'no_cumple'
-    );
+    const evaluables = inspeccion.items.filter((i) => i.respuesta === 'cumple' || i.respuesta === 'no_cumple');
     if (evaluables.length === 0) return 0;
     const cumplidos = evaluables.filter((i) => i.respuesta === 'cumple').length;
     return Math.round((cumplidos / evaluables.length) * 100);

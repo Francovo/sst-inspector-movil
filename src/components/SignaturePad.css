@@ -1,0 +1,38 @@
+.sst-signature {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sst-signature__box {
+  position: relative;
+  height: 144px;
+  overflow: hidden;
+  border: 1px solid var(--sst-border-strong);
+  border-radius: var(--sst-radius-md);
+  background: var(--sst-surface);
+  box-shadow: inset 0 1px 4px rgb(15 42 68 / 8%);
+}
+
+.sst-signature__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.sst-signature__guide {
+  position: absolute;
+  right: 24px;
+  bottom: 16px;
+  left: 24px;
+  border-bottom: 1px dashed var(--sst-border);
+  pointer-events: none;
+}
+
+.sst-signature__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}

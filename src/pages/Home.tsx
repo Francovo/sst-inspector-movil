@@ -1,4 +1,18 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonItem, IonLabel, IonCheckbox } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonCheckbox,
+} from '@ionic/react';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -9,14 +23,14 @@ const Home: React.FC = () => {
           <IonTitle>Inspección SST</IonTitle>
         </IonToolbar>
       </IonHeader>
-      
+
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Inspección SST</IonTitle>
           </IonToolbar>
         </IonHeader>
-        
+
         {/* Contenido principal de la inspección */}
         <div style={{ padding: '20px' }}>
           <IonCard>
@@ -25,7 +39,7 @@ const Home: React.FC = () => {
             </IonCardHeader>
             <IonCardContent>
               <p>Seleccione los elementos de control revisados en campo:</p>
-              
+
               <IonItem lines="none">
                 <IonCheckbox slot="start" />
                 <IonLabel>Uso adecuado de EPP (Casco, Gafas, Botas)</IonLabel>

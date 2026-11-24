@@ -1,45 +1,32 @@
-import {
-  IonContent,
-  IonIcon,
-  IonMenuToggle,
-  IonPage,
-  useIonRouter,
-  useIonToast,
-} from '@ionic/react';
-
+import { IonContent, IonIcon, IonMenuToggle, IonPage, useIonRouter, useIonToast } from '@ionic/react';
 import {
   addCircleOutline,
   barChartOutline,
   calendarOutline,
-  cameraOutline,
   chevronForwardOutline,
   clipboardOutline,
-  home,
+  cloudOfflineOutline,
   informationCircleOutline,
   leaf,
   logOutOutline,
   menuOutline,
   refreshOutline,
-  settingsOutline,
   shieldCheckmark,
   wifi,
 } from 'ionicons/icons';
-
 import { useEffect, useState } from 'react';
 
-import DashboardMenu from '../../components/DashboardMenu';
-
-import {
-  getCurrentUser,
-  logoutUser,
-  type User,
-} from '../../services/auth.service';
+import BottomTabBar from '../../components/BottomTabBar';
+import SideMenu from '../../components/SideMenu';
+import { useNetworkStatus } from '../../features/network/networkContext';
+import { getCurrentUser, logoutUser, type User } from '../../services/auth.service';
 
 import './dashboard.css';
 
 const Dashboard: React.FC = () => {
   const router = useIonRouter();
   const [presentToast] = useIonToast();
+  const { online } = useNetworkStatus();
 
   const [user, setUser] = useState<User | null>(null);
 
@@ -86,21 +73,14 @@ const Dashboard: React.FC = () => {
   return (
     <IonPage>
       {/* MENÚ LATERAL */}
-      <DashboardMenu onLogout={handleLogout} />
+      <SideMenu menuId="dashboard-menu" contentId="dashboard-content" onLogout={handleLogout} />
 
       <IonContent fullscreen className="dashboard-content">
-        <main
-          id="dashboard-content"
-          className="dashboard-container"
-        >
+        <main id="dashboard-content" className="dashboard-container">
           {/* HEADER */}
           <header className="dashboard-header">
-            <IonMenuToggle autoHide={false}>
-              <button
-                className="dashboard-menu-button"
-                type="button"
-                aria-label="Menú"
-              >
+            <IonMenuToggle menu="dashboard-menu" autoHide={false}>
+              <button className="dashboard-menu-button" type="button" aria-label="Menú">
                 <IonIcon icon={menuOutline} />
               </button>
             </IonMenuToggle>
@@ -111,17 +91,15 @@ const Dashboard: React.FC = () => {
 
             <div className="dashboard-brand">
               <strong>SST-Inspector Móvil</strong>
-              <span>
-                Inspecciones hoy, entornos más seguros
-              </span>
+              <span>Inspecciones hoy, entornos más seguros</span>
             </div>
 
             <div className="connection-badge">
-              <IonIcon icon={wifi} />
+              <IonIcon icon={online ? wifi : cloudOfflineOutline} />
 
               <div>
-                <strong>En línea</strong>
-                <small>Conectado a internet</small>
+                <strong>{online ? 'En línea' : 'Sin conexión'}</strong>
+                <small>{online ? 'Conectado a internet' : 'Trabajando en este dispositivo'}</small>
               </div>
             </div>
 
@@ -149,9 +127,7 @@ const Dashboard: React.FC = () => {
 
                 <span>{user.fullName}</span>
 
-                <p>
-                  Tu trabajo contribuye a entornos más seguros
-                </p>
+                <p>Tu trabajo contribuye a entornos más seguros</p>
               </div>
 
               <div className="dashboard-date">
@@ -163,12 +139,7 @@ const Dashboard: React.FC = () => {
                   <small>
                     Semana{' '}
                     {Math.ceil(
-                      (new Date().getDate() +
-                        new Date(
-                          new Date().getFullYear(),
-                          new Date().getMonth(),
-                          1,
-                        ).getDay()) /
+                      (new Date().getDate() + new Date(new Date().getFullYear(), new Date().getMonth(), 1).getDay()) /
                         7,
                     )}
                   </small>
@@ -189,10 +160,7 @@ const Dashboard: React.FC = () => {
                   protege mañana
                 </strong>
 
-                <p>
-                  Seguridad y Salud en el Trabajo para un mejor
-                  futuro
-                </p>
+                <p>Seguridad y Salud en el Trabajo para un mejor futuro</p>
               </div>
 
               <div className="banner-worker">👷</div>
@@ -213,6 +181,7 @@ const Dashboard: React.FC = () => {
               <button
                 type="button"
                 className="shortcut-card shortcut-primary"
+                onClick={() => router.push('/listas', 'forward', 'push')}
               >
                 <IonIcon icon={addCircleOutline} />
 
@@ -220,39 +189,31 @@ const Dashboard: React.FC = () => {
 
                 <p>Inicia una nueva inspección de SST</p>
 
-                <IonIcon
-                  icon={chevronForwardOutline}
-                  className="shortcut-arrow"
-                />
+                <IonIcon icon={chevronForwardOutline} className="shortcut-arrow" />
               </button>
 
               <button
                 type="button"
                 className="shortcut-card"
+                onClick={() => router.push('/inspeccion', 'forward', 'push')}
               >
                 <div className="shortcut-icon-wrapper">
                   <IonIcon icon={clipboardOutline} />
 
-                  <span className="notification-count">
-                    3
-                  </span>
+                  <span className="notification-count">3</span>
                 </div>
 
                 <strong>Inspecciones pendientes</strong>
 
-                <p>
-                  Revisa y continúa las inspecciones guardadas
-                </p>
+                <p>Revisa y continúa las inspecciones guardadas</p>
 
-                <IonIcon
-                  icon={chevronForwardOutline}
-                  className="shortcut-arrow"
-                />
+                <IonIcon icon={chevronForwardOutline} className="shortcut-arrow" />
               </button>
 
               <button
                 type="button"
                 className="shortcut-card"
+                onClick={() => router.push('/resumen', 'forward', 'push')}
               >
                 <IonIcon icon={barChartOutline} />
 
@@ -260,10 +221,7 @@ const Dashboard: React.FC = () => {
 
                 <p>Consulta tus reportes en la nube</p>
 
-                <IonIcon
-                  icon={chevronForwardOutline}
-                  className="shortcut-arrow"
-                />
+                <IonIcon icon={chevronForwardOutline} className="shortcut-arrow" />
               </button>
             </section>
 
@@ -275,38 +233,28 @@ const Dashboard: React.FC = () => {
                 <div>
                   <strong>Resumen de inspecciones</strong>
 
-                  <span>
-                    Estado actual en este dispositivo
-                  </span>
+                  <span>Estado actual en este dispositivo</span>
                 </div>
               </div>
 
               <div className="summary-stats">
                 <div className="summary-stat">
-                  <strong className="stat-pending">
-                    3
-                  </strong>
+                  <strong className="stat-pending">3</strong>
                   <span>Pendientes</span>
                 </div>
 
                 <div className="summary-stat">
-                  <strong className="stat-completed">
-                    5
-                  </strong>
+                  <strong className="stat-completed">5</strong>
                   <span>Completadas</span>
                 </div>
 
                 <div className="summary-stat">
-                  <strong className="stat-synced">
-                    8
-                  </strong>
+                  <strong className="stat-synced">8</strong>
                   <span>Sincronizadas</span>
                 </div>
 
                 <div className="summary-stat">
-                  <strong className="stat-errors">
-                    0
-                  </strong>
+                  <strong className="stat-errors">0</strong>
                   <span>Con errores</span>
                 </div>
               </div>
@@ -314,13 +262,7 @@ const Dashboard: React.FC = () => {
               <button
                 type="button"
                 className="sync-button"
-                onClick={() =>
-                  router.push(
-                    '/sincronizacion',
-                    'forward',
-                    'push',
-                  )
-                }
+                onClick={() => router.push('/sincronizacion', 'forward', 'push')}
               >
                 <IonIcon icon={refreshOutline} />
                 Ver sincronización
@@ -329,73 +271,22 @@ const Dashboard: React.FC = () => {
 
             {/* ESTADO DE CONEXIÓN */}
             <section className="connection-information">
-              <IonIcon icon={informationCircleOutline} />
+              <IonIcon icon={online ? informationCircleOutline : cloudOfflineOutline} />
 
               <div>
-                <strong>
-                  Estás trabajando sin conexión.
-                </strong>
+                <strong>{online ? 'Estás trabajando en línea.' : 'Estás trabajando sin conexión.'}</strong>
 
                 <p>
-                  Puedes realizar inspecciones y guardar tus datos.
-                  Cuando tengas internet, se sincronizarán
-                  automáticamente.
+                  {online
+                    ? 'Puedes realizar inspecciones y guardar tus datos. Tus reportes se sincronizarán automáticamente.'
+                    : 'Puedes realizar inspecciones y guardar tus datos. Cuando tengas internet, se sincronizarán automáticamente.'}
                 </p>
               </div>
             </section>
           </section>
 
           {/* NAVEGACIÓN INFERIOR */}
-          <nav className="dashboard-tabbar">
-            <button
-              type="button"
-              className="tab-item tab-active"
-            >
-              <IonIcon icon={home} />
-              <span>Inicio</span>
-            </button>
-
-            <button
-              type="button"
-              className="tab-item"
-            >
-              <IonIcon icon={clipboardOutline} />
-              <span>Inspecciones</span>
-            </button>
-
-            <button
-              type="button"
-              className="tab-item"
-              onClick={() =>
-                router.push(
-                  '/evidencias',
-                  'forward',
-                  'push',
-                )
-              }
-            >
-              <IonIcon icon={cameraOutline} />
-              <span>Evidencias</span>
-            </button>
-
-            <button
-              type="button"
-              className="tab-item"
-            >
-              <IonIcon icon={barChartOutline} />
-              <span>Reportes</span>
-            </button>
-
-            <IonMenuToggle autoHide={false}>
-              <button
-                type="button"
-                className="tab-item"
-              >
-                <IonIcon icon={settingsOutline} />
-                <span>Más</span>
-              </button>
-            </IonMenuToggle>
-          </nav>
+          <BottomTabBar menuId="dashboard-menu" />
         </main>
       </IonContent>
     </IonPage>

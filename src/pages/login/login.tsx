@@ -14,7 +14,7 @@ import {
 } from 'ionicons/icons';
 import { useState } from 'react';
 
-import './Login.css';
+import './login.css';
 import { loginUser } from '../../services/auth.service';
 
 const Login: React.FC = () => {

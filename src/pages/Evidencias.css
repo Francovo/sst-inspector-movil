@@ -1,0 +1,118 @@
+/* Captura de evidencias — misma paleta y superficies del dashboard. */
+
+.evidencias-toolbar {
+  --background: #0f2a44;
+  --color: #ffffff;
+}
+
+.evidencias-content {
+  --background: #f3f6fa;
+}
+
+.evidencias-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.evidencias-container h2 {
+  margin: 0;
+  color: #0f2a44;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.evidencias-subtitulo {
+  margin: 4px 0 18px;
+  color: #64748b;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.evidencias-card {
+  margin: 0 0 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgb(15 42 68 / 6%);
+}
+
+.evidencias-imagen {
+  width: 100%;
+  max-height: 280px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.evidencias-placeholder {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  min-height: 180px;
+  color: #64748b;
+  text-align: center;
+}
+
+.evidencias-placeholder-icon {
+  color: #94a3b8;
+  font-size: 48px;
+}
+
+.evidencias-placeholder p {
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.boton-camara {
+  --background: #22c55e;
+  --background-hover: #16a34a;
+  --color: #ffffff;
+  --border-radius: 12px;
+  margin: 0;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.boton-galeria {
+  --border-color: #cbd5e1;
+  --border-radius: 12px;
+  --color: #0f2a44;
+  margin: 10px 0 0;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.descripcion-container {
+  margin: 20px 0 16px;
+}
+
+.descripcion-container h3 {
+  margin: 0 0 8px;
+  color: #0f2a44;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.descripcion-textarea {
+  --background: #ffffff;
+  --border-radius: 8px;
+  --color: #1e293b;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+}
+
+.boton-guardar {
+  --background: #0f2a44;
+  --background-hover: #0d253c;
+  --color: #ffffff;
+  --border-radius: 12px;
+  margin: 0;
+  font-weight: 600;
+  text-transform: none;
+}

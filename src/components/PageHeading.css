@@ -1,0 +1,51 @@
+.sst-heading {
+  padding: 0 2px;
+}
+
+.sst-heading--badge {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sst-space-2);
+}
+
+.sst-heading__badge {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: 1px;
+  border-radius: var(--sst-radius-sm);
+  background: #ecfdf5;
+  color: var(--sst-green-dark);
+  font-size: 16px;
+}
+
+.sst-heading__copy {
+  min-width: 0;
+}
+
+.sst-heading__title {
+  display: flex;
+  align-items: center;
+  gap: var(--sst-space-2);
+  margin: 0;
+  color: var(--sst-navy);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.sst-heading__title ion-icon {
+  flex-shrink: 0;
+  color: #334155;
+  font-size: 19px;
+}
+
+.sst-heading__subtitle {
+  margin: 2px 0 0;
+  color: var(--sst-text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}

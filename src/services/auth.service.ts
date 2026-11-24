@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   fullName: string;
@@ -15,16 +14,12 @@ const getUsers = (): User[] => {
   return data ? JSON.parse(data) : [];
 };
 
-export const registerUser = (
-  userData: Omit<User, 'id'>
-): { success: boolean; message: string } => {
+export const registerUser = (userData: Omit<User, 'id'>): { success: boolean; message: string } => {
   const users = getUsers();
 
   const email = userData.email.trim().toLowerCase();
 
-  const existingUser = users.find(
-    user => user.email.toLowerCase() === email
-  );
+  const existingUser = users.find((user) => user.email.toLowerCase() === email);
 
   if (existingUser) {
     return {
@@ -52,14 +47,12 @@ export const registerUser = (
 export const loginUser = (
   email: string,
   password: string,
-  rememberSession: boolean
+  rememberSession: boolean,
 ): { success: boolean; message: string } => {
   const users = getUsers();
 
   const user = users.find(
-    item =>
-      item.email.toLowerCase() === email.trim().toLowerCase() &&
-      item.password === password
+    (item) => item.email.toLowerCase() === email.trim().toLowerCase() && item.password === password,
   );
 
   if (!user) {
@@ -89,9 +82,7 @@ export const loginUser = (
 };
 
 export const getCurrentUser = (): User | null => {
-  const sessionData =
-    localStorage.getItem(SESSION_KEY) ??
-    sessionStorage.getItem(SESSION_KEY);
+  const sessionData = localStorage.getItem(SESSION_KEY) ?? sessionStorage.getItem(SESSION_KEY);
 
   if (!sessionData) return null;
 
@@ -102,7 +93,7 @@ export const getCurrentUser = (): User | null => {
 
   const users = getUsers();
 
-  return users.find(user => user.id === session.userId) ?? null;
+  return users.find((user) => user.id === session.userId) ?? null;
 };
 
 export const logoutUser = (): void => {

@@ -7,22 +7,38 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
+  IonIcon,
   IonInput,
   IonItem,
   IonLabel,
   IonPage,
-  IonSegment,
-  IonSegmentButton,
   IonTextarea,
   IonTitle,
   IonToast,
   IonToolbar,
 } from '@ionic/react';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { cameraOutline, imagesOutline } from 'ionicons/icons';
+import React, { useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
+import ErrorToast from '../../components/ErrorToast';
+import SignaturePad from '../../components/SignaturePad';
+import PhotoFileInput from '../../features/media/PhotoFileInput';
+import { usePhotoCapture } from '../../features/media/usePhotoCapture';
 import { useInspeccionFlow } from '../../hooks/useInspeccionFlow';
 import type { EstadoRespuesta, InspeccionSST } from '../../models/sst.models';
+import { LISTAS_BASE } from '../../services/storage.service';
+
+import './Inspeccion.css';
+
+const RESPUESTAS: readonly {
+  value: Exclude<EstadoRespuesta, null>;
+  label: string;
+}[] = [
+  { value: 'cumple', label: 'Cumple' },
+  { value: 'no_cumple', label: 'No cumple' },
+  { value: 'no_aplica', label: 'No aplica' },
+];
 
 const INSPECCION_INICIAL: InspeccionSST = {
   id: 'insp-001',
@@ -70,6 +86,22 @@ const INSPECCION_INICIAL: InspeccionSST = {
 
 const Inspeccion: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const listaSeleccionada = useMemo(() => {
+    const state = location.state as { listaId?: string } | null;
+    return LISTAS_BASE.find((lista) => lista.id === state?.listaId);
+  }, [location.state]);
+
+  const inspeccionInicial = useMemo<InspeccionSST>(
+    () => ({
+      ...INSPECCION_INICIAL,
+      listaChequeoId: listaSeleccionada?.id ?? INSPECCION_INICIAL.listaChequeoId,
+      listaChequeoTitulo: listaSeleccionada?.titulo ?? INSPECCION_INICIAL.listaChequeoTitulo,
+    }),
+    [listaSeleccionada],
+  );
+
   const {
     inspeccion,
     itemActual,
@@ -82,15 +114,20 @@ const Inspeccion: React.FC = () => {
     registrarFirma,
     guardarBorrador,
     finalizarYGuardar,
-  } = useInspeccionFlow(INSPECCION_INICIAL);
+  } = useInspeccionFlow(inspeccionInicial);
 
   const [observacionTexto, setObservacionTexto] = useState<string>(itemActual?.observacion ?? '');
   const [descripcionHallazgo, setDescripcionHallazgo] = useState<string>('');
+  const [fotoHallazgo, setFotoHallazgo] = useState<string | null>(null);
   const [responsableNombre, setResponsableNombre] = useState<string>(inspeccion.firma?.nombre ?? '');
   const [responsableCargo, setResponsableCargo] = useState<string>(inspeccion.firma?.cargo ?? '');
   const [firmaTexto, setFirmaTexto] = useState<string>(inspeccion.firma?.firmaBase64 ?? '');
   const [mensajeToast, setMensajeToast] = useState<string>('');
   const [mostrarToast, setMostrarToast] = useState<boolean>(false);
+
+  const { capture, inputRef, handleFileChange, error, clearError } = usePhotoCapture({
+    onPhoto: (foto) => setFotoHallazgo(foto.dataUrl),
+  });
 
   const notificar = (msg: string) => {
     setMensajeToast(msg);
@@ -112,9 +149,7 @@ const Inspeccion: React.FC = () => {
       responderItem(itemActual.respuesta, observacionTexto);
     }
     const nuevoIndice =
-      direccion === 'anterior'
-        ? Math.max(indiceActual - 1, 0)
-        : Math.min(indiceActual + 1, totalPreguntas - 1);
+      direccion === 'anterior' ? Math.max(indiceActual - 1, 0) : Math.min(indiceActual + 1, totalPreguntas - 1);
 
     const siguienteItem = inspeccion.items[nuevoIndice];
     setObservacionTexto(siguienteItem?.observacion ?? '');
@@ -135,11 +170,12 @@ const Inspeccion: React.FC = () => {
     agregarEvidencia({
       id: `ev-${Date.now()}`,
       itemId: itemActual.id,
-      imagenBase64OPath: 'evidencia-capturada-local',
+      imagenBase64OPath: fotoHallazgo ?? 'sin-foto',
       descripcionHallazgo: descripcionHallazgo.trim(),
       fechaCaptura: new Date().toISOString(),
     });
     setDescripcionHallazgo('');
+    setFotoHallazgo(null);
     notificar('Evidencia agregada a la inspección.');
   };
 
@@ -171,12 +207,7 @@ const Inspeccion: React.FC = () => {
 
   const handleFinalizar = async () => {
     try {
-      if (
-        responsableNombre.trim() &&
-        responsableCargo.trim() &&
-        firmaTexto.trim() &&
-        !inspeccion.firma
-      ) {
+      if (responsableNombre.trim() && responsableCargo.trim() && firmaTexto.trim() && !inspeccion.firma) {
         registrarFirma({
           nombre: responsableNombre.trim(),
           cargo: responsableCargo.trim(),
@@ -186,24 +217,22 @@ const Inspeccion: React.FC = () => {
       }
       await finalizarYGuardar();
       notificar('Inspección finalizada y lista para sincronizar.');
+      navigate('/resumen');
     } catch (error) {
-      const textoError =
-        error instanceof Error ? error.message : 'Completa los datos y la firma del responsable.';
+      const textoError = error instanceof Error ? error.message : 'Completa los datos y la firma del responsable.';
       notificar(textoError);
     }
   };
 
-  const valorSegmento = itemActual?.respuesta ?? undefined;
-
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className="inspeccion-toolbar">
           <IonTitle>Inspección SST</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
+      <IonContent className="inspeccion-content ion-padding">
         <IonCard>
           <IonCardHeader>
             <IonCardTitle>{inspeccion.listaChequeoTitulo}</IonCardTitle>
@@ -220,8 +249,8 @@ const Inspeccion: React.FC = () => {
               <strong>Área/Sede:</strong> {inspeccion.sedeArea}
             </p>
             <p>
-              <strong>Avance:</strong> Pregunta {totalPreguntas > 0 ? indiceActual + 1 : 0} de{' '}
-              {totalPreguntas} | <strong>Evidencias:</strong> {inspeccion.evidencias.length}
+              <strong>Avance:</strong> Pregunta {totalPreguntas > 0 ? indiceActual + 1 : 0} de {totalPreguntas} |{' '}
+              <strong>Evidencias:</strong> {inspeccion.evidencias.length}
             </p>
           </IonCardContent>
         </IonCard>
@@ -241,26 +270,26 @@ const Inspeccion: React.FC = () => {
                 <strong>Guía de verificación:</strong> {itemActual.guiaVerificacion}
               </p>
 
-              <IonItem lines="none">
-                <IonLabel position="stacked">Respuesta</IonLabel>
-                <IonSegment
-                  value={valorSegmento}
-                  onIonChange={(e) => {
-                    const val = e.detail.value as EstadoRespuesta | undefined;
-                    if (val) handleSeleccionRespuesta(val);
-                  }}
-                >
-                  <IonSegmentButton value="cumple">
-                    <IonLabel>Cumple</IonLabel>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="no_cumple">
-                    <IonLabel>No cumple</IonLabel>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="no_aplica">
-                    <IonLabel>No aplica</IonLabel>
-                  </IonSegmentButton>
-                </IonSegment>
-              </IonItem>
+              <div className="inspeccion__options">
+                <span className="inspeccion__field-label">Respuesta</span>
+                <div aria-label="Respuesta del ítem" className="inspeccion__options-grid" role="group">
+                  {RESPUESTAS.map((option) => {
+                    const selected = itemActual.respuesta === option.value;
+
+                    return (
+                      <button
+                        aria-pressed={selected}
+                        className={`inspeccion__option${selected ? ' inspeccion__option--active' : ''}`}
+                        key={option.value}
+                        onClick={() => handleSeleccionRespuesta(option.value)}
+                        type="button"
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
               <IonItem>
                 <IonLabel position="stacked">Observación del ítem</IonLabel>
@@ -271,12 +300,7 @@ const Inspeccion: React.FC = () => {
                 />
               </IonItem>
 
-              <IonButton
-                expand="block"
-                fill="outline"
-                className="ion-margin-top"
-                onClick={handleGuardarObservacion}
-              >
+              <IonButton expand="block" fill="outline" className="ion-margin-top" onClick={handleGuardarObservacion}>
                 Guardar observación
               </IonButton>
 
@@ -313,6 +337,30 @@ const Inspeccion: React.FC = () => {
                 onIonInput={(e) => setDescripcionHallazgo(e.detail.value ?? '')}
               />
             </IonItem>
+
+            {fotoHallazgo ? (
+              <figure className="inspeccion__foto">
+                <img alt="Evidencia del hallazgo" src={fotoHallazgo} />
+                <button type="button" onClick={() => setFotoHallazgo(null)}>
+                  Quitar foto
+                </button>
+              </figure>
+            ) : (
+              <div className="inspeccion__foto-actions">
+                <IonButton expand="block" onClick={() => void capture('camera')}>
+                  <IonIcon slot="start" icon={cameraOutline} />
+                  Tomar foto
+                </IonButton>
+                <IonButton expand="block" fill="outline" onClick={() => void capture('gallery')}>
+                  <IonIcon slot="start" icon={imagesOutline} />
+                  Galería
+                </IonButton>
+              </div>
+            )}
+
+            <PhotoFileInput inputRef={inputRef} onChange={handleFileChange} />
+            <ErrorToast message={error} onDismiss={clearError} />
+
             <IonButton expand="block" className="ion-margin-top" onClick={handleAgregarEvidencia}>
               Agregar evidencia al ítem actual
             </IonButton>
@@ -340,20 +388,11 @@ const Inspeccion: React.FC = () => {
                 onIonInput={(e) => setResponsableCargo(e.detail.value ?? '')}
               />
             </IonItem>
-            <IonItem>
-              <IonLabel position="stacked">Firma (trazo o código de firma)</IonLabel>
-              <IonInput
-                value={firmaTexto}
-                placeholder="Escribe o pega firma base64"
-                onIonInput={(e) => setFirmaTexto(e.detail.value ?? '')}
-              />
-            </IonItem>
-            <IonButton
-              expand="block"
-              fill="outline"
-              className="ion-margin-top"
-              onClick={handleGuardarFirma}
-            >
+            <div className="inspeccion__signature">
+              <span className="inspeccion__field-label">Firma del responsable</span>
+              <SignaturePad onClear={() => setFirmaTexto('')} onSave={setFirmaTexto} />
+            </div>
+            <IonButton expand="block" fill="outline" className="ion-margin-top" onClick={handleGuardarFirma}>
               Registrar firma
             </IonButton>
           </IonCardContent>
@@ -365,12 +404,7 @@ const Inspeccion: React.FC = () => {
         <IonButton expand="block" color="success" className="ion-margin-top" onClick={handleFinalizar}>
           Finalizar y guardar inspección
         </IonButton>
-        <IonButton
-          expand="block"
-          fill="clear"
-          className="ion-margin-top"
-          onClick={() => navigate('/dashboard')}
-        >
+        <IonButton expand="block" fill="clear" className="ion-margin-top" onClick={() => navigate('/dashboard')}>
           Volver al Dashboard
         </IonButton>
 
